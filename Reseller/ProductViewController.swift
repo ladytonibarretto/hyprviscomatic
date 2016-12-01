@@ -88,9 +88,12 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let qty = Int(arrayMenuOptions[buttonRow]["quantity"]!)! - Int(1)
         
-        arrayMenuOptions[buttonRow]["quantity"] = String(qty)
+        if qty >= 0 {
+            arrayMenuOptions[buttonRow]["quantity"] = String(qty)
+            
+            ProductDetailsMenuOptions.reloadData()
+        }
         
-        ProductDetailsMenuOptions.reloadData()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
