@@ -319,7 +319,7 @@
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dB-iJ-Mld">
+                                                <button opaque="NO" tag="204" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dB-iJ-Mld">
                                                     <frame key="frameInset" minX="157" minY="107" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.90197539329999998" green="0.49555784460000002" blue="0.028697935859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -328,7 +328,7 @@
                                                         <color key="titleColor" red="0.003775699763" green="0.20231807230000001" blue="0.41418746109999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n45-l5-21A">
+                                                <button opaque="NO" tag="205" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n45-l5-21A">
                                                     <frame key="frameInset" minX="224" minY="107" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.90197539329999998" green="0.49555784460000002" blue="0.028697935859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1463,7 +1463,7 @@
             <objects>
                 <navigationController storyboardIdentifier="navAcctNavController" title="NavAccount" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rAm-UD-CvC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FMl-c5-akt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FMl-c5-akt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1551,7 +1551,7 @@
             <objects>
                 <navigationController storyboardIdentifier="drawerNavController" title="NavMenu" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Flh-ai-fP9" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Lxf-mr-ozr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="Lxf-mr-ozr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.58431372549019611" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1593,7 +1593,7 @@
                     <navigationItem key="navigationItem" id="BkV-uX-D6P">
                         <barButtonItem key="backBarButtonItem" title="Back" id="A7x-NH-MGR"/>
                     </navigationItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nNQ-N2-AqG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nNQ-N2-AqG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

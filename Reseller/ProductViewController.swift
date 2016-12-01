@@ -67,12 +67,32 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
     func updateArrayMenuOptions(brands: [JSON]){
         arrayMenuOptions.removeAll()
         for brand in brands{
-            arrayMenuOptions.append(["brand": brand["value"]["brand_name"].stringValue, "price": "1000.00", "quantity": "10"])
+            arrayMenuOptions.append(["brand": brand["value"]["brand_name"].stringValue, "price": "1000.00", "quantity": "0"])
         }
 
         ProductDetailsMenuOptions.reloadData()
     }
     
+    func increaseButtonClicked(sender: UIButton){
+        let buttonRow = sender.tag
+        
+        let qty = Int(arrayMenuOptions[buttonRow]["quantity"]!)! + Int(1)
+        
+        arrayMenuOptions[buttonRow]["quantity"] = String(qty)
+        
+        ProductDetailsMenuOptions.reloadData()
+    }
+
+    func decreaseButtonClicked(sender: UIButton){
+        let buttonRow = sender.tag
+        
+        let qty = Int(arrayMenuOptions[buttonRow]["quantity"]!)! - Int(1)
+        
+        arrayMenuOptions[buttonRow]["quantity"] = String(qty)
+        
+        ProductDetailsMenuOptions.reloadData()
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "productDetailCell")!
         
@@ -84,17 +104,27 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
         let lblBrand : UILabel = cell.contentView.viewWithTag(201) as! UILabel
         let lblPrice : UILabel = cell.contentView.viewWithTag(202) as! UILabel
         let lblQuantity : UILabel = cell.contentView.viewWithTag(203) as! UILabel
+        let decBtn : UIButton? = cell.contentView.viewWithTag(204) as? UIButton
+        let incBtn : UIButton? = cell.contentView.viewWithTag(205) as? UIButton
 
+        incBtn?.tag = indexPath.row
+        decBtn?.tag = indexPath.row
+        
         lblBrand.text = arrayMenuOptions[indexPath.row]["brand"]!
         lblPrice.text = arrayMenuOptions[indexPath.row]["price"]!
         lblQuantity.text = arrayMenuOptions[indexPath.row]["quantity"]!
         
+        incBtn?.addTarget(self, action: #selector(increaseButtonClicked), for: .touchUpInside)
+        decBtn?.addTarget(self, action: #selector(decreaseButtonClicked), for: .touchUpInside)
         return cell
     }
+    
     
     func tableView(_ ProductDetailsMenuOptions: UITableView, didSelectRowAt indexPath: IndexPath) {
         let btn = UIButton(type: UIButtonType.custom)
         btn.tag = indexPath.row
+        
+        print("TAPPEEDDD CELL")
     }
     
     func tableView(_ ProductDetailsMenuOptions: UITableView, numberOfRowsInSection section: Int) -> Int {
