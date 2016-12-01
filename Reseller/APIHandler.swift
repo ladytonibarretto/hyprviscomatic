@@ -7,14 +7,14 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-func sendRequest(url: String, params: String?=nil) -> (String, Int){
+func sendRequest(url: String, params: String?=nil, type: String, completedRequest: @escaping (_ dat: Data, _ stat: Int) -> Void ){
     var request = URLRequest(url: URL(string: url)!)
     let postString = params
-    var responseString = String()
-    var statusCode = Int()
+    var statusCode = 0
 
-    request.httpMethod = Constants.POST
+    request.httpMethod = type
     request.httpBody = postString?.data(using: .utf8)
     
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -29,40 +29,56 @@ func sendRequest(url: String, params: String?=nil) -> (String, Int){
             statusCode = httpStatus.statusCode
             print("statusCode should be 200, but is \(httpStatus.statusCode)")
             print("response = \(response)")
+        } else {
+            statusCode = 200
         }
-        
-        responseString = String(data: data, encoding: .utf8)!
-        print("responseString = \(responseString)")
+        completedRequest(data, statusCode)
+
     }
     task.resume()
-    return (responseString, statusCode)
 }
 
 
-func isValidCredential(username: String, password: String) -> Bool{
+func isValidCredential(username: String, password: String, validationCompleted: @escaping (_ dat: Data, _ stat: Int) -> Void) {
     
-    let URL = "\(Constants.baseURL)/\(Constants.signInURL)"
+    let URL = "\(Constants.baseURL)/login"
     let params = "username=\(username)&password=\(password)"
-    let response = sendRequest(url: URL, params: params)
-    
-    // Check response status code
-    if response.1 == 200{
-        return true
-    }
-    
-    return true
+    sendRequest(url: URL, params: params, type: "POST", completedRequest: { (dat, stat) -> Void in
+        print("###########")
+        let json = JSON(data: dat)
+        print("******DATA")
+        print(stat)
+        print(json["user"]["username"].stringValue)
+        
+        validationCompleted(dat, stat)
+        
+    })
 }
 
 func getBranches() -> [Branch]{
     
     let URL = "\(Constants.baseURL)/\(Constants.branchURL)"
-    let response = sendRequest(url: URL)
+//    let response = sendRequest(url: URL, type: "POST")
     
     // Check response status code
-    if response.1 == 200{
-        return []
-    }
+//    if response.1 == 200{
+//        return []
+//    }
     
     return []
+}
+
+func getProducts() -> [Product]{
+    let URL = "\(Constants.baseURL)/\(Constants.productURL)"
+//    let response = sendRequest(url: URL, type: "GET")
+    
+    print("GETTT PRODUCTS!!!")
+    // Check response status code
+//    if response.1 == 200{
+//        return []
+//    }
+    
+    return []
+
 }
 

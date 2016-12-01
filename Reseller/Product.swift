@@ -17,6 +17,7 @@ class Product {
     private var _price: Double!
     private var _photos: ImageModel!
     private var _productAttr: String! // double check
+    private var _quantity: UInt!
     
 
     var id: UInt {
@@ -45,6 +46,10 @@ class Product {
 
     var productAttr: String {
         return _productAttr
+    }
+    
+    var quantity: UInt {
+        return _quantity
     }
     
     init(name: String, brand: String, price: Double) {

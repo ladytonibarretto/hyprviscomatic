@@ -337,7 +337,7 @@
                                                         <color key="titleColor" red="0.003775699763" green="0.20231807230000001" blue="0.41418746109999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="203" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n90-fk-Qw5">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="203" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n90-fk-Qw5">
                                                     <frame key="frameInset" minX="190" minY="112" width="30" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
@@ -1571,7 +1571,7 @@
                 <navigationController title="NavMain" automaticallyAdjustsScrollViewInsets="NO" id="V2y-m5-TIU" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="CKH-PA-PsV"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="3uS-td-6Ap">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="3uS-td-6Ap">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.58431372550000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1593,7 +1593,7 @@
                     <navigationItem key="navigationItem" id="BkV-uX-D6P">
                         <barButtonItem key="backBarButtonItem" title="Back" id="A7x-NH-MGR"/>
                     </navigationItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nNQ-N2-AqG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nNQ-N2-AqG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

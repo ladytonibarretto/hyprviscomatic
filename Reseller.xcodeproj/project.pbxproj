@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3136399EE9ACD41E6B4A2859 /* libPods-Reseller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44F056EF83B7DE81DB9BB143 /* libPods-Reseller.a */; };
+		98DC05D60B1FA00192C471FF /* Pods_Reseller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBA9734024AF4F46E0D207D /* Pods_Reseller.framework */; };
 		E2066FA51DD38878006548E9 /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2066FA41DD38877006548E9 /* MapSearchViewController.swift */; };
 		E23ED1BB1DBE4E5E002BBD8A /* AddBranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23ED1BA1DBE4E5E002BBD8A /* AddBranchViewController.swift */; };
 		E259693C1DB90CF600CCF7E8 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E259693B1DB90CF600CCF7E8 /* MenuViewController.swift */; };
@@ -42,7 +42,7 @@
 
 /* Begin PBXFileReference section */
 		1A18585013C1CA63EE4570BE /* Pods-Reseller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reseller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Reseller/Pods-Reseller.debug.xcconfig"; sourceTree = "<group>"; };
-		44F056EF83B7DE81DB9BB143 /* libPods-Reseller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Reseller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBBA9734024AF4F46E0D207D /* Pods_Reseller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Reseller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF022726E1384990615004AC /* Pods-Reseller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reseller.release.xcconfig"; path = "Pods/Target Support Files/Pods-Reseller/Pods-Reseller.release.xcconfig"; sourceTree = "<group>"; };
 		E2066FA41DD38877006548E9 /* MapSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		E23ED1BA1DBE4E5E002BBD8A /* AddBranchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBranchViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3136399EE9ACD41E6B4A2859 /* libPods-Reseller.a in Frameworks */,
+				98DC05D60B1FA00192C471FF /* Pods_Reseller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +93,7 @@
 		6B3C69FEC528AA57EB723B9A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				44F056EF83B7DE81DB9BB143 /* libPods-Reseller.a */,
+				BBBA9734024AF4F46E0D207D /* Pods_Reseller.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

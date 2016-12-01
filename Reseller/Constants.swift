@@ -9,7 +9,7 @@
 import Foundation
 
 struct Constants {
-    static let baseURL = "http://130.211.249.66"
+    static let baseURL = "http://139.162.57.95/api"
     static let signInURL = "api-token-auth"
     static let branchURL = "branch"
     static let purchaseURL = "purchase"

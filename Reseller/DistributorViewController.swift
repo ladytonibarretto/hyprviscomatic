@@ -26,6 +26,7 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         addSlideMenuButton()
+//        let isValid = getProducts()
         // Do any additional setup after loading the view.
     }
 

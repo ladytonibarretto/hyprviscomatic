@@ -18,6 +18,7 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
     var arrayMenuOptions = [Dictionary<String,String>]()
     
     var productName = String()
+    
     var order: Order {
         get {
             return _order

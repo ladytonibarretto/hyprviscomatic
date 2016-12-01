@@ -62,7 +62,7 @@ class NotifViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             let notification = notificationsList[indexPath.row]
             
-            cell.updateUI(notification: notification)
+            cell.updateUI(notification: notification) // use to customize each cell
             
             return cell
             
