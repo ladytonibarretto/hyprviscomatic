@@ -43,15 +43,11 @@ func isValidCredential(username: String, password: String, validationCompleted: 
     
     let URL = "\(Constants.baseURL)/login"
     let params = "username=\(username)&password=\(password)"
+    
     sendRequest(url: URL, params: params, type: "POST", completedRequest: { (dat, stat) -> Void in
-        print("###########")
         let json = JSON(data: dat)
-        print("******DATA")
-        print(stat)
         print(json["user"]["username"].stringValue)
-        
         validationCompleted(dat, stat)
-        
     })
 }
 
@@ -68,17 +64,25 @@ func getBranches() -> [Branch]{
     return []
 }
 
-func getProducts() -> [Product]{
+func getProducts(validationCompleted: @escaping (_ products: [String]) -> Void) {
+
     let URL = "\(Constants.baseURL)/\(Constants.productURL)"
-//    let response = sendRequest(url: URL, type: "GET")
+
+    var productList = [String]()
     
-    print("GETTT PRODUCTS!!!")
-    // Check response status code
-//    if response.1 == 200{
-//        return []
-//    }
-    
-    return []
+    sendRequest(url: URL, type: "GET", completedRequest: { (dat, stat) -> Void in
+        print("GETTT PRODUCTS!!!")
+        let result = JSON(data: dat)
+        
+        if let products = result["results"].array{
+            for product in products {
+                print(product["name"].stringValue)
+                productList.append(product["name"].stringValue)
+            }
+        }
+        print(result["count"].stringValue)
+        validationCompleted(productList)
+    })
 
 }
 

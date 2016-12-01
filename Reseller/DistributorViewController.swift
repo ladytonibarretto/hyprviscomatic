@@ -22,12 +22,15 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
     var arrayMenuOptions = [Dictionary<String,String>]()
     
     var productName = String()
-    
+    var messageFrame = UIView()
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addSlideMenuButton()
-//        let isValid = getProducts()
-        // Do any additional setup after loading the view.
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,42 +39,31 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         distMenuOptions.tableFooterView = UIView()
         distMenuOptions.delegate = self
         distMenuOptions.dataSource = self
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        updateArrayMenuOptions()
+        progressBarDisplayer(msg: "Loading...")
+        
+        getProducts(validationCompleted: { (products) -> Void in
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.messageFrame.isUserInteractionEnabled = true
+                self.messageFrame.window?.isUserInteractionEnabled = true
+                self.messageFrame.removeFromSuperview()
+                self.strLabel.isEnabled = false
+                self.updateArrayMenuOptions(products: products)
+            }
+        })
+
     }
     
-    func updateArrayMenuOptions(){
+    func updateArrayMenuOptions(products: [String]){
         arrayMenuOptions.removeAll()
-        arrayMenuOptions.append(["title":"Marlboro", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Winston", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Philips", "icon":"HomeIcon"])
-        arrayMenuOptions.append(["title":"Fortune", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Chesterfields", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Palm Mall", "icon":"HomeIcon"])
-        arrayMenuOptions.append(["title":"Marlboro", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Winston", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Philips", "icon":"HomeIcon"])
-        arrayMenuOptions.append(["title":"Fortune", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Chesterfields", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Palm Mall", "icon":"HomeIcon"])
-        arrayMenuOptions.append(["title":"Marlboro", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Winston", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Philips", "icon":"HomeIcon"])
-        arrayMenuOptions.append(["title":"Fortune", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Chesterfields", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Palm Mall", "icon":"HomeIcon"])
-        arrayMenuOptions.append(["title":"Marlboro", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Winston", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Philips", "icon":"HomeIcon"])
-        arrayMenuOptions.append(["title":"Fortune", "icon":"CameraIcon"])
-        arrayMenuOptions.append(["title":"Chesterfields", "icon":"PlayIcon"])
-        arrayMenuOptions.append(["title":"Palm Mall", "icon":"HomeIcon"])
-        
+        for product in products{
+            arrayMenuOptions.append(["title":product, "icon":"CameraIcon"])
+        }
         distMenuOptions.reloadData()
     }
     
@@ -108,6 +100,21 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1;
+    }
+    
+    func progressBarDisplayer(msg:String) {
+        strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 200, height: 50))
+        strLabel.text = msg
+        strLabel.textColor = UIColor.white
+        messageFrame = UIView(frame: CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 180, height: 50))
+        messageFrame.layer.cornerRadius = 15
+        messageFrame.backgroundColor = UIColor(white: 0, alpha: 1)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.startAnimating()
+        messageFrame.addSubview(activityIndicator)
+        messageFrame.addSubview(strLabel)
+        view.addSubview(messageFrame)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

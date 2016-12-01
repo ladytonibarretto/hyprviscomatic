@@ -52,10 +52,10 @@ class Product {
         return _quantity
     }
     
-    init(name: String, brand: String, price: Double) {
+    init(name: String) {
         _name = name
-        _brand = brand
-        _price = price
+//        _brand = brand
+//        _price = price
 //        _productAttr = productAttr
     }
 }

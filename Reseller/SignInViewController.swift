@@ -70,25 +70,22 @@ class SingInViewController: UIViewController, UITextFieldDelegate {
                 if stat == 200 {
                     self.performSegue(withIdentifier: "pushToDistShop", sender: nil)
                 } else if stat == 403 {
-                    let alertController = UIAlertController(title: "Invalid Credentials!", message:
-                        "Unable to login with provided credentials", preferredStyle: UIAlertControllerStyle.alert)
-                    alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
-                    
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    self.setElements(isEnabled: true)
+                    self.showModal(title: "Invalid Credentials!", msg: "Unable to login with provided credentials")
                 } else {
-                    let alertController = UIAlertController(title: "Error!", message:
-                        "Unable to login. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
-                    alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
-                    
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    self.setElements(isEnabled: true)
-                
+                    self.showModal(title: "Error!", msg: "Unable to login. Please try again later.")
                 }
             }
         })
+    }
+    
+    func showModal(title: String, msg: String){
+        let alertController = UIAlertController(title: title, message:
+            msg, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        self.setElements(isEnabled: true)
     }
     
     func progressBarDisplayer(msg:String) {
