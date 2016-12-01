@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class BranchesViewController: UIViewController, UITableViewDataSource {
     
@@ -32,6 +33,10 @@ class BranchesViewController: UIViewController, UITableViewDataSource {
         }
     }
 
+    var messageFrame = UIView()
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,7 +52,20 @@ class BranchesViewController: UIViewController, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        updateArrayMenuOptions()
+//        updateArrayMenuOptions()
+        progressBarDisplayer(msg: "Loading...")
+        
+        getBranches(validationCompleted: { (branches) -> Void in
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.messageFrame.isUserInteractionEnabled = true
+                self.messageFrame.window?.isUserInteractionEnabled = true
+                self.messageFrame.removeFromSuperview()
+                self.strLabel.isEnabled = false
+                self.updateArrayMenuOptions(branches: branches)
+            }
+        })
+
     }
     
     @IBAction func addNewBranch(_ sender: AnyObject) {
@@ -61,18 +79,11 @@ class BranchesViewController: UIViewController, UITableViewDataSource {
         }
     }
     
-    func updateArrayMenuOptions(){
+    func updateArrayMenuOptions(branches: [JSON]){
         arrayMenuOptions.removeAll()
-        
-        arrayMenuOptions.append(["BranchName":"Meycauayan Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        arrayMenuOptions.append(["BranchName":"Makati Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        arrayMenuOptions.append(["BranchName":"Taguig Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        arrayMenuOptions.append(["BranchName":"Malolos Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        arrayMenuOptions.append(["BranchName":"Cavite Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        arrayMenuOptions.append(["BranchName":"Batangas Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        arrayMenuOptions.append(["BranchName":"Quezon Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        arrayMenuOptions.append(["BranchName":"Cubao Branch", "BranchAddress":"071 Bagbaguin, Meycauayan, Bulacan","BranchContactNum":"+639178151198"])
-        
+        for branch in branches{
+            arrayMenuOptions.append(["BranchName": branch["name"].stringValue, "BranchAddress": branch["address"].stringValue,"BranchContactNum": branch["phone"].stringValue])
+        }
         branchMenuOptions.reloadData()
     }
     
@@ -114,4 +125,20 @@ class BranchesViewController: UIViewController, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1;
     }
+    
+    func progressBarDisplayer(msg:String) {
+        strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 200, height: 50))
+        strLabel.text = msg
+        strLabel.textColor = UIColor.white
+        messageFrame = UIView(frame: CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 180, height: 50))
+        messageFrame.layer.cornerRadius = 15
+        messageFrame.backgroundColor = UIColor(white: 0, alpha: 1)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.startAnimating()
+        messageFrame.addSubview(activityIndicator)
+        messageFrame.addSubview(strLabel)
+        view.addSubview(messageFrame)
+    }
+
 }

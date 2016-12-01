@@ -6,6 +6,7 @@
 //  Copyright © 2016 Lady Toni Barretto. All rights reserved.
 //
 
+import UIKit
 import Foundation
 import SwiftyJSON
 
@@ -45,44 +46,63 @@ func isValidCredential(username: String, password: String, validationCompleted: 
     let params = "username=\(username)&password=\(password)"
     
     sendRequest(url: URL, params: params, type: "POST", completedRequest: { (dat, stat) -> Void in
-        let json = JSON(data: dat)
-        print(json["user"]["username"].stringValue)
         validationCompleted(dat, stat)
     })
 }
 
-func getBranches() -> [Branch]{
+func getBranches(validationCompleted: @escaping (_ branches: [JSON]) -> Void) {
     
     let URL = "\(Constants.baseURL)/\(Constants.branchURL)"
-//    let response = sendRequest(url: URL, type: "POST")
     
-    // Check response status code
-//    if response.1 == 200{
-//        return []
-//    }
+    var branchList = [JSON]()
     
-    return []
+    sendRequest(url: URL, type: "GET", completedRequest: { (dat, stat) -> Void in
+        let result = JSON(data: dat)
+        
+        if let branches = result["results"].array{
+            for branch in branches {
+                branchList.append(branch)
+            }
+        }
+        validationCompleted(branchList)
+    })
 }
 
-func getProducts(validationCompleted: @escaping (_ products: [String]) -> Void) {
+
+func getProducts(validationCompleted: @escaping (_ products: [JSON]) -> Void) {
 
     let URL = "\(Constants.baseURL)/\(Constants.productURL)"
 
-    var productList = [String]()
+    var productList = [JSON]()
     
     sendRequest(url: URL, type: "GET", completedRequest: { (dat, stat) -> Void in
-        print("GETTT PRODUCTS!!!")
         let result = JSON(data: dat)
         
         if let products = result["results"].array{
             for product in products {
-                print(product["name"].stringValue)
-                productList.append(product["name"].stringValue)
+                productList.append(product)
             }
         }
-        print(result["count"].stringValue)
         validationCompleted(productList)
     })
+}
 
+func getBrands(id: String, validationCompleted: @escaping (_ brands: [JSON]) -> Void) {
+    
+    let URL = "\(Constants.baseURL)/\(Constants.productURL)/\(id)"
+    
+    var brandList = [JSON]()
+    
+    sendRequest(url: URL, type: "GET", completedRequest: { (dat, stat) -> Void in
+        let result = JSON(data: dat)
+
+        if let brands = result["attributes"].array{
+            for brand in brands {
+                print(brand["name"].stringValue)
+                brandList.append(brand)
+            }
+        }
+        validationCompleted(brandList)
+    })
 }
 

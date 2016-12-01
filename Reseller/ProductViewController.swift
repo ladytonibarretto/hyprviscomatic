@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class ProductViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -18,7 +19,12 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
     var arrayMenuOptions = [Dictionary<String,String>]()
     
     var productName = String()
+    var productID = String()
     
+    var messageFrame = UIView()
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+
     var order: Order {
         get {
             return _order
@@ -28,7 +34,7 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
     }
     
     override func didReceiveMemoryWarning() {
@@ -42,19 +48,28 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
         ProductDetailsMenuOptions.tableFooterView = UIView()
         ProductDetailsMenuOptions.delegate = self
         ProductDetailsMenuOptions.dataSource = self
-        updateArrayMenuOptions()
+        
+        progressBarDisplayer(msg: "Loading...")
+        
+        getBrands(id: productID, validationCompleted: { (brands) -> Void in
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.messageFrame.isUserInteractionEnabled = true
+                self.messageFrame.window?.isUserInteractionEnabled = true
+                self.messageFrame.removeFromSuperview()
+                self.strLabel.isEnabled = false
+                self.updateArrayMenuOptions(brands: brands)
+            }
+        })
+
     }
     
-    func updateArrayMenuOptions(){
+    func updateArrayMenuOptions(brands: [JSON]){
         arrayMenuOptions.removeAll()
-        
-        arrayMenuOptions.append(["brand": "Brand1", "price": "1000.00", "quantity": "10"])
-        arrayMenuOptions.append(["brand": "Brand1", "price": "1000.00", "quantity": "10"])
-        arrayMenuOptions.append(["brand": "Brand1", "price": "1000.00", "quantity": "10"])
-        arrayMenuOptions.append(["brand": "Brand1", "price": "1000.00", "quantity": "10"])
-        arrayMenuOptions.append(["brand": "Brand1", "price": "1000.00", "quantity": "10"])
-        arrayMenuOptions.append(["brand": "Brand1", "price": "1000.00", "quantity": "10"])
-        
+        for brand in brands{
+            arrayMenuOptions.append(["brand": brand["value"]["brand_name"].stringValue, "price": "1000.00", "quantity": "10"])
+        }
+
         ProductDetailsMenuOptions.reloadData()
     }
     
@@ -89,5 +104,21 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
     func numberOfSections(in ProductDetailsMenuOptions: UITableView) -> Int {
         return 1;
     }
+    
+    func progressBarDisplayer(msg:String) {
+        strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 200, height: 50))
+        strLabel.text = msg
+        strLabel.textColor = UIColor.white
+        messageFrame = UIView(frame: CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 180, height: 50))
+        messageFrame.layer.cornerRadius = 15
+        messageFrame.backgroundColor = UIColor(white: 0, alpha: 1)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.startAnimating()
+        messageFrame.addSubview(activityIndicator)
+        messageFrame.addSubview(strLabel)
+        view.addSubview(messageFrame)
+    }
+
 
 }

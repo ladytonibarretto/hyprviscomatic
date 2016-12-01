@@ -1463,7 +1463,7 @@
             <objects>
                 <navigationController storyboardIdentifier="navAcctNavController" title="NavAccount" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rAm-UD-CvC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FMl-c5-akt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FMl-c5-akt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1551,7 +1551,7 @@
             <objects>
                 <navigationController storyboardIdentifier="drawerNavController" title="NavMenu" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Flh-ai-fP9" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="Lxf-mr-ozr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Lxf-mr-ozr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.58431372549019611" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1593,7 +1593,7 @@
                     <navigationItem key="navigationItem" id="BkV-uX-D6P">
                         <barButtonItem key="backBarButtonItem" title="Back" id="A7x-NH-MGR"/>
                     </navigationItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nNQ-N2-AqG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nNQ-N2-AqG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

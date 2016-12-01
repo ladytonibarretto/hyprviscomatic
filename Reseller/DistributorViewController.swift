@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class DistributorViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -25,12 +26,11 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
     var messageFrame = UIView()
     var activityIndicator = UIActivityIndicatorView()
     var strLabel = UILabel()
+    var productID = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         addSlideMenuButton()
-        
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,13 +56,12 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
                 self.updateArrayMenuOptions(products: products)
             }
         })
-
     }
     
-    func updateArrayMenuOptions(products: [String]){
+    func updateArrayMenuOptions(products: [JSON]){
         arrayMenuOptions.removeAll()
         for product in products{
-            arrayMenuOptions.append(["title":product, "icon":"CameraIcon"])
+            arrayMenuOptions.append(["title":product["name"].stringValue, "icon":"CameraIcon", "id": product["id"].stringValue])
         }
         distMenuOptions.reloadData()
     }
@@ -89,9 +88,9 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
         btn.tag = indexPath.row
         
         productName = arrayMenuOptions[indexPath.row]["title"]!
+        productID = arrayMenuOptions[indexPath.row]["id"]!
         
-        performSegue(withIdentifier: "pushToProductBrands", sender: "")
-
+        performSegue(withIdentifier: "pushToProductBrands", sender: nil)
     }
     
     func tableView(_ distMenuOptions: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,6 +120,7 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
                 
         if let destination = segue.destination as? ProductViewController {
             destination.productName = productName
+            destination.productID = productID
         }
         
     }
