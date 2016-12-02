@@ -54,8 +54,8 @@ class BranchesViewController: UIViewController, UITableViewDataSource {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
 //        updateArrayMenuOptions()
         progressBarDisplayer(msg: "Loading...")
-        
-        getBranches(validationCompleted: { (branches) -> Void in
+        let token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hY3ltaXJhbmRhQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNDgwNDI3ODQ1LCJ1c2VyX2lkIjoxMCwiZW1haWwiOiIiLCJleHAiOjE0ODMwMTk4NDV9.WExIyZLN4s0--03jtoJc37a5-WcvZmF7iodKcGe5WuA"
+        getBranches(token: token, validationCompleted: { (branches) -> Void in
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.messageFrame.isUserInteractionEnabled = true

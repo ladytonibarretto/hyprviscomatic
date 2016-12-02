@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class NotifViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -36,23 +37,36 @@ class NotifViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NotifMenuOptions.tableFooterView = UIView()
         NotifMenuOptions.delegate = self
         NotifMenuOptions.dataSource = self
-        updateArrayMenuOptions()
+        let token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hY3ltaXJhbmRhQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNDgwNDI3ODQ1LCJ1c2VyX2lkIjoxMCwiZW1haWwiOiIiLCJleHAiOjE0ODMwMTk4NDV9.WExIyZLN4s0--03jtoJc37a5-WcvZmF7iodKcGe5WuA"
+        
+        getNotifications(token: token, validationCompleted: { (notifications) -> Void in
+            DispatchQueue.main.async {
+                self.updateArrayMenuOptions(notifications: notifications)
+            }
+        })
+//        updateArrayMenuOptions()
     }
     
-    func updateArrayMenuOptions(){
+    func updateArrayMenuOptions(notifications: [JSON]){
         notificationsList = [NotificationPost]()
-        let test1 = NotificationPost(notifTitle:"GrabCar Promo!sdfdsfsdfsdfdsfdsfdsfsdfdsf sdfsdfdsfsddsf", notifBody:"20% discount on selected items", status: "No")
-        let test2 = NotificationPost(notifTitle:"GrabCar Announcement!", notifBody:"20% discount on selected itemssdf sdf jlsjdfk ljsd aksd ja,n a,smnd ja,nsd j,anmsd jamnsd j,adn jasnd asjdn asjdn asldn asldn asldn aslkd nlasdn asld nasm,d nas,", status: "Seen")
-        let test3 = NotificationPost(notifTitle:"Seat Sale!", notifBody:"20% discount on selected items", status: "Seen")
-        let test4 = NotificationPost(notifTitle:"Promo tonight!", notifBody:"20% discount on selected items", status: "Seen")
-        let test5 = NotificationPost(notifTitle:"Promo tonight!", notifBody:"20% discount on selected items", status: "No")
-        let test6 = NotificationPost(notifTitle:"Promo tonight!", notifBody:"20% discount on selected items", status: "No")
-        notificationsList.append(test1)
-        notificationsList.append(test2)
-        notificationsList.append(test3)
-        notificationsList.append(test4)
-        notificationsList.append(test5)
-        notificationsList.append(test6)
+//        let test1 = NotificationPost(notifTitle:"GrabCar Promo!sdfdsfsdfsdfdsfdsfdsfsdfdsf sdfsdfdsfsddsf", notifBody:"20% discount on selected items", status: "No")
+//        let test2 = NotificationPost(notifTitle:"GrabCar Announcement!", notifBody:"20% discount on selected itemssdf sdf jlsjdfk ljsd aksd ja,n a,smnd ja,nsd j,anmsd jamnsd j,adn jasnd asjdn asjdn asldn asldn asldn aslkd nlasdn asld nasm,d nas,", status: "Seen")
+//        let test3 = NotificationPost(notifTitle:"Seat Sale!", notifBody:"20% discount on selected items", status: "Seen")
+//        let test4 = NotificationPost(notifTitle:"Promo tonight!", notifBody:"20% discount on selected items", status: "Seen")
+//        let test5 = NotificationPost(notifTitle:"Promo tonight!", notifBody:"20% discount on selected items", status: "No")
+//        let test6 = NotificationPost(notifTitle:"Promo tonight!", notifBody:"20% discount on selected items", status: "No")
+//        notificationsList.append(test1)
+//        notificationsList.append(test2)
+//        notificationsList.append(test3)
+//        notificationsList.append(test4)
+//        notificationsList.append(test5)
+//        notificationsList.append(test6)
+        
+        notificationsList = [NotificationPost]()
+        for notification in notifications{
+            
+            notificationsList.append(NotificationPost(notifTitle:notification["title"].stringValue, notifBody:notification["content"].stringValue, status:notification["status"].stringValue))
+        }
 
         NotifMenuOptions.reloadData()
     }

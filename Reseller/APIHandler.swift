@@ -10,13 +10,16 @@ import UIKit
 import Foundation
 import SwiftyJSON
 
-func sendRequest(url: String, params: String?=nil, type: String, completedRequest: @escaping (_ dat: Data, _ stat: Int) -> Void ){
+func sendRequest(url: String, token: String?=nil, params: String?=nil, type: String, completedRequest: @escaping (_ dat: Data, _ stat: Int) -> Void ){
     var request = URLRequest(url: URL(string: url)!)
     let postString = params
     var statusCode = 0
 
     request.httpMethod = type
     request.httpBody = postString?.data(using: .utf8)
+    if(token != nil) {
+        request.setValue((token), forHTTPHeaderField: "Authorization")
+    }
     
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         // check for fundamental networking error
@@ -50,13 +53,13 @@ func isValidCredential(username: String, password: String, validationCompleted: 
     })
 }
 
-func getBranches(validationCompleted: @escaping (_ branches: [JSON]) -> Void) {
+func getBranches(token: String,validationCompleted: @escaping (_ branches: [JSON]) -> Void) {
     
     let URL = "\(Constants.baseURL)/\(Constants.branchURL)"
     
     var branchList = [JSON]()
     
-    sendRequest(url: URL, type: "GET", completedRequest: { (dat, stat) -> Void in
+    sendRequest(url: URL, token: token, type: "GET", completedRequest: { (dat, stat) -> Void in
         let result = JSON(data: dat)
         
         if let branches = result["results"].array{
@@ -103,6 +106,25 @@ func getBrands(id: String, validationCompleted: @escaping (_ brands: [JSON]) -> 
             }
         }
         validationCompleted(brandList)
+    })
+}
+
+func getNotifications(token: String, validationCompleted: @escaping (_ notifications: [JSON]) -> Void) {
+    
+    let URL = "\(Constants.baseURL)/\(Constants.notificationURL)"
+    
+    var notificationList = [JSON]()
+    
+    sendRequest(url: URL, token: token, type: "GET", completedRequest: { (dat, stat) -> Void in
+        let result = JSON(data: dat)
+        
+        if let notifications = result["results"].array{
+            for notification in notifications {
+                print(notification["title"].stringValue)
+                notificationList.append(notification)
+            }
+        }
+        validationCompleted(notificationList)
     })
 }
 

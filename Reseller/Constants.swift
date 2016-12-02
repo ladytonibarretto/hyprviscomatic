@@ -15,6 +15,7 @@ struct Constants {
     static let purchaseURL = "purchase"
     static let productURL = "product"
     static let registrationURL = "registration"
+    static let notificationURL = "announcement"
     static let POST = "POST"
     static let GETT = "GET"
 }
