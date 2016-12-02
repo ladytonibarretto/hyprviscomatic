@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19BEDFFA1DF18F0E000C9C12 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BEDFF91DF18F0E000C9C12 /* Registration.swift */; };
 		98DC05D60B1FA00192C471FF /* Pods_Reseller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBA9734024AF4F46E0D207D /* Pods_Reseller.framework */; };
 		E2066FA51DD38878006548E9 /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2066FA41DD38877006548E9 /* MapSearchViewController.swift */; };
 		E23ED1BB1DBE4E5E002BBD8A /* AddBranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23ED1BA1DBE4E5E002BBD8A /* AddBranchViewController.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		19BEDFF91DF18F0E000C9C12 /* Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Registration.swift; sourceTree = "<group>"; };
 		1A18585013C1CA63EE4570BE /* Pods-Reseller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reseller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Reseller/Pods-Reseller.debug.xcconfig"; sourceTree = "<group>"; };
 		BBBA9734024AF4F46E0D207D /* Pods_Reseller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Reseller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF022726E1384990615004AC /* Pods-Reseller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reseller.release.xcconfig"; path = "Pods/Target Support Files/Pods-Reseller/Pods-Reseller.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				E2EF904A1DCF14A500B74BE8 /* LoginDetails.swift */,
 				E26EDB341DD49B3E00423847 /* Order.swift */,
 				E26EDB361DD4A34300423847 /* Item.swift */,
+				19BEDFF91DF18F0E000C9C12 /* Registration.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				E26EDB2D1DD3C82900423847 /* Constants.swift in Sources */,
 				E83C1C851DB4CE2E00CA7221 /* AppDelegate.swift in Sources */,
 				E2EF90491DCF12A100B74BE8 /* Product.swift in Sources */,
+				19BEDFFA1DF18F0E000C9C12 /* Registration.swift in Sources */,
 				E2EF90471DCE43DE00B74BE8 /* ImageModel.swift in Sources */,
 				E26EDB301DD4927A00423847 /* APIHandler.swift in Sources */,
 				E2BEB4D41DB90EFE00F8764A /* ResellerViewController.swift in Sources */,

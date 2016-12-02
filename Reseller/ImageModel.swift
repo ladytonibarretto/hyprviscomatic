@@ -10,19 +10,19 @@ import Foundation
 
 class ImageModel {
     private var _url: String!
-    private var _integerBase: String!
-    private var _stringBase: String!
+    private var _integerBase: [Int]!
+    private var _stringBase: [String]!
     private var _imageCount: UInt!
     
     var url: String {
         return _url
     }
     
-    var integerBase: String {
+    var integerBase: [Int] {
         return _integerBase
     }
     
-    var stringBase: String {
+    var stringBase: [String] {
         return _stringBase
     }
 
@@ -30,7 +30,7 @@ class ImageModel {
         return _imageCount
     }
 
-    init(url: String, integerBase: String, strinBase: String, imageCount: UInt) {
+    init(url: String, integerBase: [Int], stringBase: [String], imageCount: UInt) {
         
         _url = url
         _integerBase = integerBase
