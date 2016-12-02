@@ -128,3 +128,22 @@ func getNotifications(token: String, validationCompleted: @escaping (_ notificat
     })
 }
 
+func getOrderHistory(token: String, validationCompleted: @escaping (_ notifications: [JSON]) -> Void) {
+    
+    let URL = "\(Constants.baseURL)/\(Constants.purchaseURL)"
+    
+    var notificationList = [JSON]()
+    
+    sendRequest(url: URL, token: token, type: "GET", completedRequest: { (dat, stat) -> Void in
+        let result = JSON(data: dat)
+        
+        if let notifications = result["results"].array{
+            for notification in notifications {
+                print(notification["title"].stringValue)
+                notificationList.append(notification)
+            }
+        }
+        validationCompleted(notificationList)
+    })
+}
+
