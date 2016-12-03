@@ -31,6 +31,7 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         progressBarDisplayer(msg: "Loading...")
+        self.view.isUserInteractionEnabled = false
         
         getProducts(validationCompleted: { (products) -> Void in
             DispatchQueue.main.async {
@@ -43,6 +44,7 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
                 self.distMenuOptions.tableFooterView = UIView()
                 self.distMenuOptions.delegate = self
                 self.distMenuOptions.dataSource = self
+                self.view.isUserInteractionEnabled = true
             }
         })
         addSlideMenuButton()

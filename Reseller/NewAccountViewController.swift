@@ -126,7 +126,7 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
             if shopNameField!.text == "" || shopAddressField!.text == "" || contactNumField!.text == "" || shippingAddressField!.text == "" || passwordField!.text == "" || emailAddField!.text == "" {
                 showModal(title: "Error!", msg: "Missing required fields", isComplete: false)
             } else {
-                showModal(title: "Thank you for signing up!", msg: "Your account is pending for approval", isComplete: true)
+                registerAccount()
             }
             
         } else {
@@ -138,9 +138,9 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
         let alertController = UIAlertController(title: title, message:
             msg, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) { action -> Void in
-            
+                print("Success!")
             if isComplete {
-                self.registerAccount()
+                self.performSegue(withIdentifier: "pushToSignIn", sender: nil)
             }
         })
         
@@ -156,7 +156,9 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
         for imageView in storeImgList {
             if imageView.image != nil {
                 let storeImgData = UIImageJPEGRepresentation((imageView.image)!, 0.5)
-                let storeImgString = storeImgData?.base64EncodedString(options: [])
+                var storeImgString = storeImgData?.base64EncodedString(options:Data.Base64EncodingOptions(rawValue: UInt(0)))
+                
+                storeImgString = "data:image/jpeg;base64," + storeImgString!
                 stringBaseList.append(storeImgString!)
             }
         }
@@ -178,6 +180,7 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
     
     func registerAccount(){
         progressBarDisplayer(msg: "Loading...")
+        self.view.isUserInteractionEnabled = false
         
         let newAccount = Registration()
         newAccount.shopName = shopNameField.text!
@@ -203,9 +206,15 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
                 self.messageFrame.isUserInteractionEnabled = true
                 self.messageFrame.window?.isUserInteractionEnabled = true
                 self.messageFrame.removeFromSuperview()
+                self.view.isUserInteractionEnabled = true
+
                 self.strLabel.isEnabled = false
                 
-                self.performSegue(withIdentifier: "pushToSignIn", sender: nil)
+                if stat == 200 {
+                    self.showModal(title: "Thank you for signing up!", msg: "Your account is pending for approval", isComplete: true)
+                } else {
+                    self.showModal(title: "Error!", msg: "Cannot process your request...", isComplete: false)
+                }
             }
         })
 

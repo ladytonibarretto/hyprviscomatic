@@ -156,16 +156,16 @@ func postRegistration(registrationModel: Registration, validationCompleted: @esc
     let branchJsonArray:NSMutableArray = NSMutableArray()
     let photosJsonArray:NSMutableArray = NSMutableArray()
     
-    shopDetailsJson.setValue(registrationModel.shopName, forKey: "shop")
+    shopDetailsJson.setValue(registrationModel.shopName, forKey: "shop_name")
     shopDetailsJson.setValue(registrationModel.contactNum, forKey: "phone")
-    shopDetailsJson.setValue(registrationModel.shopName, forKey: "shop_address")
-    shopDetailsJson.setValue(registrationModel.contactNum, forKey: "phone")
+    shopDetailsJson.setValue(registrationModel.shopAddress, forKey: "shop_address")
+    shopDetailsJson.setValue(registrationModel.shippingAddress, forKey: "shipping_address")
     
     
     if(!registrationModel.branchModels.isEmpty) {
         for branchModel in registrationModel.branchModels
         {
-
+            print("with branchhhh", branchModel.name)
             //ARRAY OF STORE PHOTO
             for stringBase in branchModel.photos.stringBase {
                 let storePhotoJson:NSMutableDictionary = NSMutableDictionary()
@@ -197,6 +197,11 @@ func postRegistration(registrationModel: Registration, validationCompleted: @esc
         let data = try JSONSerialization.data(withJSONObject: registrationJson, options: JSONSerialization.WritingOptions.prettyPrinted)
 
         let params = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        
+//        print("params*****")
+//        
+//        print(params)
+        
         sendRequest(url: URL, params: params as String?, type: "POST", completedRequest: { (dat, stat) -> Void in
             validationCompleted(dat, stat)
         })

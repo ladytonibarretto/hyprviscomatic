@@ -40,19 +40,11 @@ class SingInViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    func setElements(isEnabled: Bool){
-        username.isEnabled = isEnabled
-        password.isEnabled = isEnabled
-        newAcctBtn.isEnabled = isEnabled
-        shopBtn.isEnabled = isEnabled
-        loginBtn.isEnabled = isEnabled
-    }
-    
     @IBAction func signInTapped(_ sender: AnyObject) {
         
         // show activity indicator (spinner)
         progressBarDisplayer(msg: "Signing In...")
-        setElements(isEnabled: false)
+        self.view.isUserInteractionEnabled = false
         
         // Verify credentials
         isValidCredential(username: username.text!, password: password.text!, validationCompleted: { (dat, stat) -> Void in
@@ -64,6 +56,7 @@ class SingInViewController: UIViewController, UITextFieldDelegate {
                 self.messageFrame.isUserInteractionEnabled = true
                 self.messageFrame.window?.isUserInteractionEnabled = true
                 self.messageFrame.removeFromSuperview()
+                self.view.isUserInteractionEnabled = true
                 self.strLabel.isEnabled = false
                     
                 // Check credentials based on http status code
@@ -84,8 +77,6 @@ class SingInViewController: UIViewController, UITextFieldDelegate {
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
-        
-        self.setElements(isEnabled: true)
     }
     
     func progressBarDisplayer(msg:String) {
