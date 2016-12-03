@@ -718,17 +718,24 @@
                         <outlet property="branchName" destination="9Sw-83-47e" id="aS6-Z0-3OT"/>
                         <outlet property="branchNameLbl" destination="CUP-Py-u2r" id="h4K-X9-ZiA"/>
                         <outlet property="branchPhoneLbl" destination="Pbe-gS-VFr" id="5iE-Tq-oP2"/>
+                        <outlet property="contactNumField" destination="MDs-Fs-Jpf" id="rIv-0q-u3I"/>
+                        <outlet property="emailAddField" destination="gY7-8F-TCP" id="Pam-GA-EyA"/>
                         <outlet property="newAcctScrollView" destination="mzt-UK-YwQ" id="p0e-gZ-uuW"/>
+                        <outlet property="passwordField" destination="E30-SS-dLy" id="WPM-Eb-4lS"/>
                         <outlet property="permitImg1" destination="wkL-cg-ekv" id="5sb-NC-Ne3"/>
                         <outlet property="permitImg2" destination="LsG-Fa-FvA" id="Gmy-V3-kBv"/>
                         <outlet property="permitImg3" destination="5y2-XZ-JtQ" id="Rg7-xH-rJl"/>
                         <outlet property="permitImgLbl" destination="fH6-GB-KFT" id="GPO-Qe-wUc"/>
                         <outlet property="phone" destination="Av1-eg-Jp1" id="jUO-FB-ge9"/>
-                        <outlet property="shopName" destination="RxC-X3-5M3" id="kZh-72-Fg8"/>
+                        <outlet property="shippingAddressField" destination="kL2-TQ-CmF" id="Dyf-OR-5lg"/>
+                        <outlet property="shopAddressField" destination="mQc-6Y-Xze" id="S1J-K2-74u"/>
+                        <outlet property="shopName" destination="RxC-X3-5M3" id="Ex3-4c-GVR"/>
+                        <outlet property="shopNameField" destination="RxC-X3-5M3" id="bH1-A0-63S"/>
                         <outlet property="storeImg1" destination="JoR-9e-xhA" id="Fb1-iA-ExE"/>
                         <outlet property="storeImg2" destination="DiL-5O-pkX" id="b3j-xc-N4A"/>
                         <outlet property="storeImg3" destination="wNv-ex-b1R" id="lfm-2d-x6v"/>
                         <outlet property="storeImgLbl" destination="kqw-Fb-BhI" id="GPi-gS-ek9"/>
+                        <segue destination="ZFn-kG-FWV" kind="push" identifier="pushToSignIn" id="eF1-8M-kXZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wFf-ah-YQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1620,8 +1627,9 @@
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Q1z-6U-3bT"/>
-        <segue reference="KKa-xU-DXi"/>
+        <segue reference="eF1-8M-kXZ"/>
         <segue reference="m2D-q8-wgK"/>
+        <segue reference="KKa-xU-DXi"/>
+        <segue reference="Q1z-6U-3bT"/>
     </inferredMetricsTieBreakers>
 </document>

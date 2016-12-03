@@ -117,26 +117,15 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     @IBAction func searchAddressFromMap(_ sender: AnyObject) {
-        performSegue(withIdentifier: "pushToMapSearch", sender: nil)
-    }
-    
-    @IBAction func submitNewBranch(_ sender: AnyObject) {
-        // add validation of fields
-        let branch = Branch(name: branchName.text!, address: branchAddress.text!, phone: phone.text!, latitude: 1, longitude: 2)
-        
-        if isNewAccount && isComplete() {
-            performSegue(withIdentifier: "pushToNewAccount", sender: branch)
-        } else if isNewAccount == false && isComplete() {
-            performSegue(withIdentifier: "pushToBranches", sender: branch)
-        } else {
-            showWarningModal(msg: "Please fill in all the required fields.")
-        }
-
+//        performSegue(withIdentifier: "pushToMapSearch", sender: nil)
     }
     
     @IBAction func submitBranch(_ sender: AnyObject) {
         // add validation of fields
-        let branch = Branch(name: branchName.text!, address: branchAddress.text!, phone: phone.text!, latitude: 1, longitude: 2)
+        let branch = Branch()
+        branch.name = branchName.text!
+        branch.address = branchAddress.text!
+        branch.phone = phone.text!
         
         if isNewAccount && isComplete() {
             performSegue(withIdentifier: "pushToNewAccount", sender: branch)
@@ -343,7 +332,7 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         self.addBranchScrollView.setContentOffset(desiredOffset, animated: true)
 
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.branchAddress.text = self.locationAddress
+        // self.branchAddress.text = self.locationAddress -> used for maps (TODO)
     }
     
     override func didReceiveMemoryWarning() {

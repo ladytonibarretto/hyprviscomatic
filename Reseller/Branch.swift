@@ -17,33 +17,32 @@ class Branch {
     private var _photos: ImageModel!
     
     var name: String {
-        return _name
+        set { _name = newValue }
+        get { return _name }
     }
     
     var address: String {
-        return _address
+        set { _address = newValue }
+        get { return _address }
     }
     
     var phone: String {
-        return _phone
+        set { _phone = newValue }
+        get { return _phone }
     }
 
     var latitude: Double {
-        return _latitude
+        set { _latitude = newValue }
+        get { return _latitude }
     }
     
     var longitude: Double {
-        return _longitude
+        set { _longitude = newValue }
+        get { return _longitude }
     }
     
     var photos: ImageModel {
-        return _photos
-    }
-    
-    init(name: String, address: String, phone: String, latitude: Double, longitude: Double) {
-        
-        _name = name
-        _address = address
-        _phone = phone
+        set { _photos = newValue }
+        get { return _photos }
     }
 }

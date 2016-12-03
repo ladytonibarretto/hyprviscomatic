@@ -30,20 +30,6 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addSlideMenuButton()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        distMenuOptions.tableFooterView = UIView()
-        distMenuOptions.delegate = self
-        distMenuOptions.dataSource = self
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
         progressBarDisplayer(msg: "Loading...")
         
         getProducts(validationCompleted: { (products) -> Void in
@@ -54,8 +40,22 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
                 self.messageFrame.removeFromSuperview()
                 self.strLabel.isEnabled = false
                 self.updateArrayMenuOptions(products: products)
+                self.distMenuOptions.tableFooterView = UIView()
+                self.distMenuOptions.delegate = self
+                self.distMenuOptions.dataSource = self
             }
         })
+        addSlideMenuButton()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     func updateArrayMenuOptions(products: [JSON]){

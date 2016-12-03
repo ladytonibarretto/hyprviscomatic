@@ -20,11 +20,12 @@ func sendRequest(url: String, token: String?=nil, params: String?=nil, type: Str
     if(token != nil) {
         request.setValue((token), forHTTPHeaderField: "Authorization")
     }
-    
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         // check for fundamental networking error
         guard let data = data, error == nil else {
+            var pangit = Data()
             print("error=\(error)")
+            completedRequest(pangit, 1)
             return
         }
         
@@ -37,7 +38,6 @@ func sendRequest(url: String, token: String?=nil, params: String?=nil, type: Str
             statusCode = 200
         }
         completedRequest(data, statusCode)
-
     }
     task.resume()
 }
@@ -147,7 +147,7 @@ func getOrderHistory(token: String, validationCompleted: @escaping (_ notificati
     })
 }
 
-func postRegistration(token: String, registrationModel: Registration, validationCompleted: @escaping (_ dat: Data, _ stat: Int) -> Void) {
+func postRegistration(registrationModel: Registration, validationCompleted: @escaping (_ dat: Data, _ stat: Int) -> Void) {
     let URL = "\(Constants.baseURL)/\(Constants.registrationURL)"
     
     //Registration json body
@@ -156,48 +156,33 @@ func postRegistration(token: String, registrationModel: Registration, validation
     let branchJsonArray:NSMutableArray = NSMutableArray()
     let photosJsonArray:NSMutableArray = NSMutableArray()
     
-    shopDetailsJson.setValue(registrationModel.shopName, forKey: "shop_address")
+    shopDetailsJson.setValue(registrationModel.shopName, forKey: "shop")
     shopDetailsJson.setValue(registrationModel.contactNum, forKey: "phone")
     shopDetailsJson.setValue(registrationModel.shopName, forKey: "shop_address")
     shopDetailsJson.setValue(registrationModel.contactNum, forKey: "phone")
     
     
     if(!registrationModel.branchModels.isEmpty) {
-    for branchModel in registrationModel.branchModels
-    {
+        for branchModel in registrationModel.branchModels
+        {
 
-        //ARRAY OF STORE PHOTO
-      for storePhotoDir in branchModel.photos.stringBase {
-        let storePhotoJson:NSMutableDictionary = NSMutableDictionary()
-        
-            //TODO convert bitmap to base64 by getting the imgpath!!!Replace value
-            storePhotoJson.setValue("Base 64 img value", forKey: "image")
-        
-            //Description ko ung pang ilang number na siya hahaha
-            storePhotoJson.setValue("Photo of Permit No. ", forKey: "description")
-            photosJsonArray.add(storePhotoJson)
-      }
-        
-        
-        //ARRAY OF PERMIT PHOTO
-        for permitPhotoDir in branchModel.photos.stringBase {
-            let permitPhotoJson:NSMutableDictionary = NSMutableDictionary()
+            //ARRAY OF STORE PHOTO
+            for stringBase in branchModel.photos.stringBase {
+                let storePhotoJson:NSMutableDictionary = NSMutableDictionary()
+                storePhotoJson.setValue(stringBase, forKey: "image")
+                storePhotoJson.setValue("Photo of Permit No. ", forKey: "description")
+                photosJsonArray.add(storePhotoJson)
+            }
             
-            //TODO convert bitmap to base64 by getting the imgpath!!!Replace value
-            permitPhotoJson.setValue("Base 64 img value", forKey: "image")
-            permitPhotoJson.setValue("Photo of Permit No. ", forKey: "description")
-            photosJsonArray.add(permitPhotoJson)
+            let branchItem: NSMutableDictionary = NSMutableDictionary()
+            branchItem.setObject(photosJsonArray, forKey: "photos" as NSCopying)
+            branchItem.setValue(branchModel.name, forKey: "name")
+            branchItem.setValue("0", forKey: "lat")
+            branchItem.setValue("0", forKey: "lng")
+            branchItem.setValue(branchModel.phone, forKey: "phone")
+            branchItem.setValue(branchModel.address, forKey: "address")
+            branchJsonArray.add(branchItem)
         }
-        
-        let branchItem: NSMutableDictionary = NSMutableDictionary()
-        branchItem.setObject(photosJsonArray, forKey: "photos" as NSCopying)
-        branchItem.setValue(branchModel.name, forKey: "name")
-        branchItem.setValue("0", forKey: "lat")
-        branchItem.setValue("0", forKey: "lng")
-        branchItem.setValue(branchModel.phone, forKey: "phone")
-        branchItem.setValue(branchModel.address, forKey: "address")
-        branchJsonArray.add(branchItem)
-    }
     }
     
     registrationJson.setObject(branchJsonArray, forKey: "branches" as NSCopying)
@@ -205,18 +190,16 @@ func postRegistration(token: String, registrationModel: Registration, validation
     registrationJson.setValue(registrationModel.password, forKey: "password")
     registrationJson.setObject(shopDetailsJson, forKey: "shop" as NSCopying)
     
+    
+    
     do {
     
-    let data = try JSONSerialization.data(withJSONObject: registrationJson, options: JSONSerialization.WritingOptions.prettyPrinted)
+        let data = try JSONSerialization.data(withJSONObject: registrationJson, options: JSONSerialization.WritingOptions.prettyPrinted)
 
         let params = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        
-    
-        
-    
-    sendRequest(url: URL, params: params as String?, type: "POST", completedRequest: { (dat, stat) -> Void in
-        validationCompleted(dat, stat)
-    })
+        sendRequest(url: URL, params: params as String?, type: "POST", completedRequest: { (dat, stat) -> Void in
+            validationCompleted(dat, stat)
+        })
     }catch {
         print(error)
     }

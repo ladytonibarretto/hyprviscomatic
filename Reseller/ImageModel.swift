@@ -15,26 +15,23 @@ class ImageModel {
     private var _imageCount: UInt!
     
     var url: String {
-        return _url
+        set { _url = newValue }
+        get { return _url }
     }
     
     var integerBase: [Int] {
-        return _integerBase
+        set { _integerBase = newValue }
+        get { return _integerBase }
     }
     
     var stringBase: [String] {
-        return _stringBase
+        set { _stringBase = newValue }
+        get { return _stringBase }
     }
 
     var imageCount: UInt {
-        return _imageCount
+        set { _imageCount = newValue }
+        get { return _imageCount }
     }
 
-    init(url: String, integerBase: [Int], stringBase: [String], imageCount: UInt) {
-        
-        _url = url
-        _integerBase = integerBase
-        _stringBase = stringBase
-        _imageCount = imageCount
-    }
 }
