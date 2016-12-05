@@ -39,13 +39,33 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
     var latitude: Double?
     var longitude: Double?
     
+    
+    // data from previous controller
+    var shopName: String?
+    var shopAddress: String?
+    var contactNum: String?
+    var shippingAddress: String?
+    var password: String?
+    var emailAdd: String?
+    
     var isNewAccount = true
+    
+    var isEdit = false
 
+    private var _branch: Branch!
+    
+    var branch: Branch {
+        get {
+            return _branch
+        } set {
+            _branch = newValue
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        print("viewaddbranchhhh", branchName?.text)
         // Show Navigation Bar
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         branchName.delegate = self
@@ -53,12 +73,9 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         phone.delegate = self
         
         
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.DismissKeyboard))
         view.addGestureRecognizer(tap)
-        
-        print(addStoreImageBtn.frame.origin.y)
-        print(addBranchScrollView.frame.size.height)
-        print(addBranchScrollView.frame.size.width)
         
         // For right bar button items
         let btn1 = UIButton(type: .custom)
@@ -73,31 +90,36 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         
         self.navigationItem.setRightBarButtonItems([item1,item2], animated: true)
         
+        self.initTapRecognizers()
+    }
+    
+    func initTapRecognizers(){
+    
         let addStoreImagetap = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.tapDetected(sender:)))
         addStoreImagetap.numberOfTapsRequired = 1
         addStoreImageBtn.addGestureRecognizer(addStoreImagetap)
         addStoreImageBtn.tag = 1
-
+        
         let storeImagetap = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.imageTapped(_:)))
         storeImagetap.numberOfTapsRequired = 1
         storeImg.addGestureRecognizer(storeImagetap)
         storeImg.tag = 2
-
+        
         let storeImagetap2 = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.imageTapped(_:)))
         storeImagetap2.numberOfTapsRequired = 1
         storeImg2.addGestureRecognizer(storeImagetap2)
         storeImg2.tag = 3
-
+        
         let storeImagetap3 = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.imageTapped(_:)))
         storeImagetap3.numberOfTapsRequired = 1
         storeImg3.addGestureRecognizer(storeImagetap3)
         storeImg3.tag = 4
-
+        
         let addPermitImagetap = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.tapDetected(sender:)))
         addPermitImagetap.numberOfTapsRequired = 1
         addPermitImageBtn.addGestureRecognizer(addPermitImagetap)
         addPermitImageBtn.tag = 5
-
+        
         let permitImagetap = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.imageTapped(_:)))
         permitImagetap.numberOfTapsRequired = 1
         permitImg.addGestureRecognizer(permitImagetap)
@@ -107,12 +129,13 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         permitImagetap2.numberOfTapsRequired = 1
         permitImg2.addGestureRecognizer(permitImagetap2)
         permitImg2.tag = 7
-
+        
         let permitImagetap3 = UITapGestureRecognizer(target: self, action: #selector(AddBranchViewController.imageTapped(_:)))
         permitImagetap3.numberOfTapsRequired = 1
         permitImg3.addGestureRecognizer(permitImagetap3)
         permitImg3.tag = 8
     }
+    
     
     func DismissKeyboard(){
         view.endEditing(true)
@@ -129,8 +152,17 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         branch.address = branchAddress.text!
         branch.phone = phone.text!
         
+        let reg = Registration()
+        reg.shopName = shopName!
+        reg.shopAddress = shopAddress!
+        reg.shippingAddress = shippingAddress!
+        reg.contactNum = contactNum!
+        reg.email = emailAdd!
+        reg.password = password!
+        reg.branchModels.append(branch)
+        
         if isNewAccount && isComplete() {
-            performSegue(withIdentifier: "pushToNewAccount", sender: branch)
+            performSegue(withIdentifier: "pushToNewAccount", sender: reg)
         } else if isNewAccount == false && isComplete() {
             performSegue(withIdentifier: "pushToBranches", sender: branch)
         } else {
@@ -139,7 +171,7 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     func isComplete() -> Bool{
-        if self.locationAddress == nil && branchName!.text != "" &&  phone!.text != "" && storeImg.image != nil && permitImg != nil {
+        if self.locationAddress == nil && branchName!.text != "" &&  phone!.text != "" && storeImg.image != nil && permitImg.image != nil {
             return true
         }
         
@@ -164,16 +196,21 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         } else {
             if isNewAccount , let destination = segue.destination as? NewAccountViewController{
                 
-                if let branch = sender as? Branch {
-                    destination.branch = branch
+                if let reg = sender as? Registration {
+                    destination.reg = reg
                     destination.isNewBranchAdded = true
-                    destination.storeTmpImg1 = storeImg.image
-                    destination.storeTmpImg2 = storeImg2.image
-                    destination.storeTmpImg3 = storeImg3.image
-                    destination.permitTmpImg1 = permitImg.image
-                    destination.permitTmpImg2 = permitImg2.image
-                    destination.permitTmpImg3 = permitImg3.image
-                    
+                    destination.storeTmpImg1 = storeImg
+                    destination.storeTmpImg2 = storeImg2
+                    destination.storeTmpImg3 = storeImg3
+                    destination.permitTmpImg1 = permitImg
+                    destination.permitTmpImg2 = permitImg2
+                    destination.permitTmpImg3 = permitImg3
+                    destination.shopNameField?.text = shopName
+                    destination.shopAddressField?.text = shopAddress
+                    destination.contactNumField?.text = contactNum
+                    destination.shippingAddressField?.text = shippingAddress
+                    destination.passwordField?.text = password
+                    destination.emailAddField?.text = emailAdd
                 }
             } else {
                 
@@ -338,6 +375,23 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         // Hide temporarily since map is not usable
         self.addMapAddressBtn.isHidden = true
         self.addMapAddressLabel.isHidden = true
+        
+        
+        if isEdit {
+            print("edit branchhhhh")
+            branchName.text = branch.name
+            branchAddress.text = branch.address
+            phone.text = branch.phone
+            self.navigationController?.title = "Edit Branch"
+//            self.initTapRecognizers()
+//            storeImg.isUserInteractionEnabled = true
+//            storeImg.image = branch.storePhotos[0].image
+//            storeImg2.image = branch.storePhotos[1].image
+//            storeImg3.image = branch.storePhotos[2].image
+//            permitImg.image = branch.permitPhotos[0].image
+//            permitImg2.image = branch.permitPhotos[1].image
+//            permitImg3.image = branch.permitPhotos[2].image
+        }
     }
     
     override func didReceiveMemoryWarning() {

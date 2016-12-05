@@ -38,16 +38,32 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var emailAddField: UITextField!
 
-    private var _branch: Branch!
+    private var _reg: Registration!
 
+    @IBAction func addNewBranchDetails(_ sender: AnyObject) {
+        
+        if isNewBranchAdded {
+            let branch = Branch()
+            branch.name = branchName!.text!
+            branch.address = (address?.text!)!
+            branch.phone = (phone?.text!)!
+            
+            print("before segueee")
+            self.performSegue(withIdentifier: "pushToAddNewBranch", sender: branch)
+        } else {
+        
+            self.performSegue(withIdentifier: "pushToAddNewBranch", sender: nil)
+        }
+    }
+    
     var isNewBranchAdded = false
     
-    var storeTmpImg1 : UIImage?
-    var storeTmpImg2 : UIImage?
-    var storeTmpImg3 : UIImage?
-    var permitTmpImg1 : UIImage?
-    var permitTmpImg2 : UIImage?
-    var permitTmpImg3 : UIImage?
+    var storeTmpImg1 : UIImageView?
+    var storeTmpImg2 : UIImageView?
+    var storeTmpImg3 : UIImageView?
+    var permitTmpImg1 : UIImageView?
+    var permitTmpImg2 : UIImageView?
+    var permitTmpImg3 : UIImageView?
 
     var messageFrame = UIView()
     var activityIndicator = UIActivityIndicatorView()
@@ -56,17 +72,18 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
     var storeImgList = [UIImageView]()
     var permitImgList = [UIImageView]()
     
-    
-    var branch: Branch {
+    var reg: Registration {
         get {
-            return _branch
+            return _reg
         } set {
-            _branch = newValue
+            _reg = newValue
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("weeeeeee")
         
         storeImgList = [storeImg1, storeImg2, storeImg3]
         permitImgList = [permitImg1, permitImg2, permitImg3]
@@ -85,17 +102,26 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
 
         if isNewBranchAdded{
             print("new branchhhhh")
-            branchName?.text = branch.name
-            address?.text = branch.address
-            phone?.text = branch.phone
-            addBranchBtn?.removeFromSuperview()
+            branchName?.text = reg.branchModels[0].name
+            address?.text = reg.branchModels[0].address
+            phone?.text = reg.branchModels[0].phone
 
-            storeImg1.image = storeTmpImg1
-            storeImg2.image = storeTmpImg2
-            storeImg3.image = storeTmpImg3
-            permitImg1.image = permitTmpImg1
-            permitImg2.image = permitTmpImg2
-            permitImg3.image = permitTmpImg3
+            shopNameField?.text = reg.shopName
+            shopAddressField?.text = reg.shopAddress
+            shippingAddressField?.text = reg.shippingAddress
+            contactNumField?.text = reg.contactNum
+            passwordField?.text = reg.password
+            emailAddField?.text = reg.email
+            
+            storeImg1.image = storeTmpImg1?.image
+            storeImg2.image = storeTmpImg2?.image
+            storeImg3.image = storeTmpImg3?.image
+            permitImg1.image = permitTmpImg1?.image
+            permitImg2.image = permitTmpImg2?.image
+            permitImg3.image = permitTmpImg3?.image
+            
+            addBranchBtn?.setImage(UIImage(named: "ic_mode_edit_black"), for: UIControlState.normal)
+            
         } else {
             branchName?.removeFromSuperview()
             branchNameLbl?.removeFromSuperview()
@@ -106,21 +132,12 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
             storeImgLbl?.removeFromSuperview()
             permitImgLbl?.removeFromSuperview()
         }
-        
-        
-        if isNewBranchAdded {
-            print("newwww")
-        } else {
-            print("oldddd")
-        }
-
     }
     
     func DismissKeyboard(){
         view.endEditing(true)
     }
 
-    
     @IBAction func saveNewAcct(_ sender: AnyObject) {
         if isNewBranchAdded {
             if shopNameField!.text == "" || shopAddressField!.text == "" || contactNumField!.text == "" || shippingAddressField!.text == "" || passwordField!.text == "" || emailAddField!.text == "" {
@@ -217,8 +234,6 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
                 }
             }
         })
-
-    
     }
     
     func progressBarDisplayer(msg:String) {
@@ -241,10 +256,36 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
 
     }
     
-    @IBAction func submitNewAccount(_ sender: AnyObject) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("segueeee", segue.identifier!)
         
+        if let destination = segue.destination as? AddBranchViewController{
+            destination.shopName = shopNameField.text
+            destination.shippingAddress = shippingAddressField.text
+            destination.shopAddress = shopAddressField.text
+            destination.contactNum = contactNumField.text
+            destination.password = passwordField.text
+            destination.emailAdd = emailAddField.text
+            
+            if isNewBranchAdded {
+                
+                let branch = Branch()
+                branch.name = branchName!.text!
+                branch.address = (address?.text!)!
+                branch.phone = (phone?.text!)!
+                branch.storePhotos.append(storeImg1)
+                branch.storePhotos.append(storeImg2)
+                branch.storePhotos.append(storeImg3)
+                branch.permitPhotos.append(permitImg1)
+                branch.permitPhotos.append(permitImg2)
+                branch.permitPhotos.append(permitImg3)
+                
+                destination.branch = branch
+                destination.isEdit = true
+            }
+        }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -253,6 +294,4 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
-    
 }

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
 
 class Branch {
     private var _name: String!
@@ -15,6 +17,8 @@ class Branch {
     private var _latitude: Double!
     private var _longitude: Double!
     private var _photos: ImageModel!
+    private var _storePhotos: [UIImageView] = []
+    private var _permitPhotos: [UIImageView] = []
     
     var name: String {
         set { _name = newValue }
@@ -45,4 +49,15 @@ class Branch {
         set { _photos = newValue }
         get { return _photos }
     }
+
+    var storePhotos: [UIImageView] {
+        set { _storePhotos = newValue }
+        get { return _storePhotos }
+    }
+
+    var permitPhotos: [UIImageView] {
+        set { _permitPhotos = newValue }
+        get { return _permitPhotos }
+    }
+
 }
