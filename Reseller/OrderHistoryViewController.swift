@@ -73,7 +73,7 @@ class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITable
 //        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
 //        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
 //        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        OrderMenuOptions.reloadData()
+        OrderMenuOptions.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

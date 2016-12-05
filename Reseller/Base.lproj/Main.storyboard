@@ -1154,11 +1154,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="Add Main Branch" id="4OA-8s-oaE">
                         <barButtonItem key="backBarButtonItem" title="Back" id="449-5a-mOC"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="jPX-1h-Exi"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="jPX-1h-Exi">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="addBranchScrollView" destination="bIY-tZ-oUg" id="BLV-qF-j6g"/>
+                        <outlet property="addMapAddressBtn" destination="fiT-p9-sxz" id="CHW-CV-zca"/>
+                        <outlet property="addMapAddressLabel" destination="DxA-Pb-drJ" id="oIX-Ta-Xm5"/>
                         <outlet property="addPermitImageBtn" destination="6Sq-X6-gnG" id="E3A-Dt-i00"/>
                         <outlet property="addStoreImageBtn" destination="vBa-gb-rFE" id="JYR-pQ-3Kx"/>
                         <outlet property="branchAddress" destination="9BY-mT-Boe" id="HyK-rl-vsL"/>
@@ -1629,7 +1633,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="eF1-8M-kXZ"/>
         <segue reference="m2D-q8-wgK"/>
-        <segue reference="KKa-xU-DXi"/>
+        <segue reference="mUA-ap-6mL"/>
         <segue reference="Q1z-6U-3bT"/>
     </inferredMetricsTieBreakers>
 </document>

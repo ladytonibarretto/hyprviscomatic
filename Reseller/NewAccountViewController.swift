@@ -210,7 +210,7 @@ class NewAccountViewController: UIViewController, UIImagePickerControllerDelegat
 
                 self.strLabel.isEnabled = false
                 
-                if stat == 200 {
+                if stat == 201 {
                     self.showModal(title: "Thank you for signing up!", msg: "Your account is pending for approval", isComplete: true)
                 } else {
                     self.showModal(title: "Error!", msg: "Cannot process your request...", isComplete: false)

@@ -10,33 +10,44 @@ import UIKit
 import Foundation
 import SwiftyJSON
 
-func sendRequest(url: String, token: String?=nil, params: String?=nil, type: String, completedRequest: @escaping (_ dat: Data, _ stat: Int) -> Void ){
+
+func sendRequest(url: String, token: String?=nil, params: String?=nil, type: String, isJson: Bool?=nil, completedRequest: @escaping (_ dat: Data, _ stat: Int) -> Void ){
+
     var request = URLRequest(url: URL(string: url)!)
-    let postString = params
     var statusCode = 0
 
     request.httpMethod = type
-    request.httpBody = postString?.data(using: .utf8)
+    
+    if params != "" {
+        let postString = params
+        request.httpBody = postString?.data(using: .utf8)
+    }
+    
+    if isJson != nil {
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")
+    }
+    
     if(token != nil) {
         request.setValue((token), forHTTPHeaderField: "Authorization")
     }
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         // check for fundamental networking error
         guard let data = data, error == nil else {
-            var pangit = Data()
             print("error=\(error)")
-            completedRequest(pangit, 1)
+            completedRequest(Data(), 1)
             return
         }
         
+        let httpStatus = response as? HTTPURLResponse
+        statusCode = (httpStatus?.statusCode)!
+        
         // check for http errors
-        if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-            statusCode = httpStatus.statusCode
-            print("statusCode should be 200, but is \(httpStatus.statusCode)")
+        if httpStatus?.statusCode != 200 && httpStatus?.statusCode != 201 {
+            print("statusCode should be 200, but is \(httpStatus?.statusCode)")
             print("response = \(response)")
-        } else {
-            statusCode = 200
         }
+        
         completedRequest(data, statusCode)
     }
     task.resume()
@@ -59,7 +70,7 @@ func getBranches(token: String,validationCompleted: @escaping (_ branches: [JSON
     
     var branchList = [JSON]()
     
-    sendRequest(url: URL, token: token, type: "GET", completedRequest: { (dat, stat) -> Void in
+    sendRequest(url: URL, token: token, params:"", type: "GET", completedRequest: { (dat, stat) -> Void in
         let result = JSON(data: dat)
         
         if let branches = result["results"].array{
@@ -78,7 +89,7 @@ func getProducts(validationCompleted: @escaping (_ products: [JSON]) -> Void) {
 
     var productList = [JSON]()
     
-    sendRequest(url: URL, type: "GET", completedRequest: { (dat, stat) -> Void in
+    sendRequest(url: URL, params:"", type: "GET", completedRequest: { (dat, stat) -> Void in
         let result = JSON(data: dat)
         
         if let products = result["results"].array{
@@ -96,7 +107,7 @@ func getBrands(id: String, validationCompleted: @escaping (_ brands: [JSON]) -> 
     
     var brandList = [JSON]()
     
-    sendRequest(url: URL, type: "GET", completedRequest: { (dat, stat) -> Void in
+    sendRequest(url: URL, params: "", type: "GET", completedRequest: { (dat, stat) -> Void in
         let result = JSON(data: dat)
 
         if let brands = result["attributes"].array{
@@ -115,7 +126,7 @@ func getNotifications(token: String, validationCompleted: @escaping (_ notificat
     
     var notificationList = [JSON]()
     
-    sendRequest(url: URL, token: token, type: "GET", completedRequest: { (dat, stat) -> Void in
+    sendRequest(url: URL, token: token, params:"", type: "GET", completedRequest: { (dat, stat) -> Void in
         let result = JSON(data: dat)
         
         if let notifications = result["results"].array{
@@ -134,7 +145,7 @@ func getOrderHistory(token: String, validationCompleted: @escaping (_ notificati
     
     var notificationList = [JSON]()
     
-    sendRequest(url: URL, token: token, type: "GET", completedRequest: { (dat, stat) -> Void in
+    sendRequest(url: URL, token: token, params:"", type: "GET", completedRequest: { (dat, stat) -> Void in
         let result = JSON(data: dat)
         
         if let notifications = result["results"].array{
@@ -166,7 +177,7 @@ func postRegistration(registrationModel: Registration, validationCompleted: @esc
         for branchModel in registrationModel.branchModels
         {
             print("with branchhhh", branchModel.name)
-            //ARRAY OF STORE PHOTO
+            //array of photo
             for stringBase in branchModel.photos.stringBase {
                 let storePhotoJson:NSMutableDictionary = NSMutableDictionary()
                 storePhotoJson.setValue(stringBase, forKey: "image")
@@ -190,25 +201,16 @@ func postRegistration(registrationModel: Registration, validationCompleted: @esc
     registrationJson.setValue(registrationModel.password, forKey: "password")
     registrationJson.setObject(shopDetailsJson, forKey: "shop" as NSCopying)
     
-    
-    
     do {
     
         let data = try JSONSerialization.data(withJSONObject: registrationJson, options: JSONSerialization.WritingOptions.prettyPrinted)
 
-        let params = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        let params = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
         
-//        print("params*****")
-//        
-//        print(params)
-        
-        sendRequest(url: URL, params: params as String?, type: "POST", completedRequest: { (dat, stat) -> Void in
-            validationCompleted(dat, stat)
+        sendRequest(url: URL, params: params as String, type: "POST", isJson: true, completedRequest: { (dat, stat) -> Void in validationCompleted(dat, stat)
         })
     }catch {
         print(error)
     }
-        
-    
 }
 

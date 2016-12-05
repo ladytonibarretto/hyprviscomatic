@@ -30,6 +30,8 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var submitBtn: UIButton!
     
+    @IBOutlet weak var addMapAddressBtn: UIButton!
+    @IBOutlet weak var addMapAddressLabel: UILabel!
     var imageHere : UIImageView?
     var newImageView : UIImageView?
     let imagePicker = UIImagePickerController()
@@ -132,16 +134,15 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         } else if isNewAccount == false && isComplete() {
             performSegue(withIdentifier: "pushToBranches", sender: branch)
         } else {
-            showWarningModal(msg: "Please fill in all the required fields.")
+            showWarningModal(msg: "Please fill in all the required fields. Make sure to upload one store image and one permit image.")
         }
     }
     
     func isComplete() -> Bool{
-        if self.locationAddress == nil && branchName!.text != "" &&  phone!.text != "" {
+        if self.locationAddress == nil && branchName!.text != "" &&  phone!.text != "" && storeImg.image != nil && permitImg != nil {
             return true
         }
         
-        // check if atleast 1 image has been uploaded
         return false
     }
     
@@ -333,6 +334,10 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
 
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         // self.branchAddress.text = self.locationAddress -> used for maps (TODO)
+        
+        // Hide temporarily since map is not usable
+        self.addMapAddressBtn.isHidden = true
+        self.addMapAddressLabel.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
