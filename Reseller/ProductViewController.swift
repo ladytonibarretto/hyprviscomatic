@@ -33,6 +33,7 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
 
+    @IBOutlet weak var totalAmtLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()        
     }
@@ -59,9 +60,22 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.messageFrame.removeFromSuperview()
                 self.strLabel.isEnabled = false
                 self.updateArrayMenuOptions(brands: brands)
+                self.updateTotalAmount()
             }
         })
 
+    }
+    
+    func updateTotalAmount(){
+        var amount: Double
+        
+        amount = 0
+        for item in arrayMenuOptions{
+            let price = Double(item["price"]!)
+            amount = amount + price!
+        }
+        
+        totalAmtLbl.text = String(amount)
     }
     
     func updateArrayMenuOptions(brands: [JSON]){
@@ -126,8 +140,6 @@ class ProductViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ ProductDetailsMenuOptions: UITableView, didSelectRowAt indexPath: IndexPath) {
         let btn = UIButton(type: UIButtonType.custom)
         btn.tag = indexPath.row
-        
-        print("TAPPEEDDD CELL")
     }
     
     func tableView(_ ProductDetailsMenuOptions: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -152,22 +152,35 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         branch.address = branchAddress.text!
         branch.phone = phone.text!
         
-        let reg = Registration()
-        reg.shopName = shopName!
-        reg.shopAddress = shopAddress!
-        reg.shippingAddress = shippingAddress!
-        reg.contactNum = contactNum!
-        reg.email = emailAdd!
-        reg.password = password!
-        reg.branchModels.append(branch)
-        
         if isNewAccount && isComplete() {
+            let reg = Registration()
+            reg.shopName = shopName!
+            reg.shopAddress = shopAddress!
+            reg.shippingAddress = shippingAddress!
+            reg.contactNum = contactNum!
+            reg.email = emailAdd!
+            reg.password = password!
+            reg.branchModels.append(branch)
+            
             performSegue(withIdentifier: "pushToNewAccount", sender: reg)
         } else if isNewAccount == false && isComplete() {
+            // TODO: integrate 
+            // show modal
+            showModal(title: "Thank you for adding new branch!", msg: "This is pending for approval", isComplete: true)
+            
             performSegue(withIdentifier: "pushToBranches", sender: branch)
         } else {
             showWarningModal(msg: "Please fill in all the required fields. Make sure to upload one store image and one permit image.")
         }
+    }
+    
+    func showModal(title: String, msg: String, isComplete: Bool){
+        let alertController = UIAlertController(title: title, message:
+            msg, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+        
     }
     
     func isComplete() -> Bool{
