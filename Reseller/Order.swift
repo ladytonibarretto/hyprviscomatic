@@ -7,23 +7,20 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Order {
-    private var _id: UInt!
-    private var _discount: Double!
-    private var _totalPrice: Double!
+    private var _id: String!
+    private var _totalPrice: String!
     private var _status: String!
-    private var _items: [Item]!
+    private var _dateAdded: String!
+    private var _items: [JSON]!
     
-    var id: UInt {
+    var id: String {
         return _id
     }
-
-    var discount: Double {
-        return _discount
-    }
     
-    var totalPrice: Double {
+    var totalPrice: String {
         return _totalPrice
     }
     
@@ -31,16 +28,20 @@ class Order {
         return _status
     }
 
-    var items: [Item] {
+    var dateAdded: String {
+        return _dateAdded
+    }
+
+    var items: [JSON] {
         return _items
     }
 
-    init(id: UInt, discount: Double, totalPrice: Double, status: String, items: [Item]) {
+    init(id: String, totalPrice: String, status: String, dateAdded: String, items: [JSON]) {
         
         _id = id
-        _discount = discount
         _totalPrice = totalPrice
         _status = status
+        _dateAdded = dateAdded
         _items = items
     }
 }

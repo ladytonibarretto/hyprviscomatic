@@ -37,9 +37,10 @@ class NotifViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NotifMenuOptions.tableFooterView = UIView()
         NotifMenuOptions.delegate = self
         NotifMenuOptions.dataSource = self
-        let token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hY3ltaXJhbmRhQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNDgwNDI3ODQ1LCJ1c2VyX2lkIjoxMCwiZW1haWwiOiIiLCJleHAiOjE0ODMwMTk4NDV9.WExIyZLN4s0--03jtoJc37a5-WcvZmF7iodKcGe5WuA"
-        
-        getNotifications(token: token, validationCompleted: { (notifications) -> Void in
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let token = appDelegate.token
+
+        getNotifications(token: token!, validationCompleted: { (notifications) -> Void in
             DispatchQueue.main.async {
                 self.updateArrayMenuOptions(notifications: notifications)
             }

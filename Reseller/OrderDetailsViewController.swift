@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class OrderDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -44,13 +45,12 @@ class OrderDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func updateArrayMenuOptions(){
         arrayMenuOptions.removeAll()
+
         let items = order.items
         
-        for (_, item) in items.enumerated() {
-            let product = item.product
-            arrayMenuOptions.append(["name": product.name, "brand": product.brand, "price": String(product.price), "quantity": "10"])
+        for item in items{
+            arrayMenuOptions.append(["product": item["product"].stringValue, "brand": item["brand"].stringValue, "price": item["price"].stringValue, "quantity": item["quantity"].stringValue])
         }
-
         OrderDetailsMenuOptions.reloadData()
     }
     
@@ -66,11 +66,11 @@ class OrderDetailsViewController: UIViewController, UITableViewDelegate, UITable
         let lblBrand : UILabel = cell.contentView.viewWithTag(202) as! UILabel
         let lblPrice : UILabel = cell.contentView.viewWithTag(203) as! UILabel
         let lblQuantity : UILabel = cell.contentView.viewWithTag(204) as! UILabel
-        
-        lblName.text = arrayMenuOptions[indexPath.row]["name"]!
-        lblBrand.text = arrayMenuOptions[indexPath.row]["brand"]!
-        lblPrice.text = arrayMenuOptions[indexPath.row]["price"]!
-        lblQuantity.text = arrayMenuOptions[indexPath.row]["quantity"]!
+                
+        lblName.text = arrayMenuOptions[indexPath.row]["product"]
+        lblBrand.text = arrayMenuOptions[indexPath.row]["brand"]
+        lblPrice.text = arrayMenuOptions[indexPath.row]["price"]
+        lblQuantity.text = arrayMenuOptions[indexPath.row]["quantity"]
         
         return cell
     }

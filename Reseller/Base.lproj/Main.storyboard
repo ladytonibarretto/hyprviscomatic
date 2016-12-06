@@ -1266,7 +1266,7 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="204" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1D2-M8-lRd">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="204" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1D2-M8-lRd">
                                                     <frame key="frameInset" minX="111" minY="60" width="92" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -1281,7 +1281,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="202" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDp-W7-BoV">
-                                                    <frame key="frameInset" minX="81" minY="32" width="61" height="21"/>
+                                                    <frame key="frameInset" minX="81" minY="32" width="181" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                     <color key="textColor" red="0.90197539329999998" green="0.49555784460000002" blue="0.028697935859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1291,7 +1291,7 @@
                                                     <frame key="frameInset" minX="278" minY="36" width="93" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1475,7 +1475,7 @@
             <objects>
                 <navigationController storyboardIdentifier="navAcctNavController" title="NavAccount" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rAm-UD-CvC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FMl-c5-akt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FMl-c5-akt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1563,7 +1563,7 @@
             <objects>
                 <navigationController storyboardIdentifier="drawerNavController" title="NavMenu" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Flh-ai-fP9" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="Lxf-mr-ozr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Lxf-mr-ozr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.58431372549019611" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1583,7 +1583,7 @@
                 <navigationController title="NavMain" automaticallyAdjustsScrollViewInsets="NO" id="V2y-m5-TIU" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="CKH-PA-PsV"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="3uS-td-6Ap">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="3uS-td-6Ap">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.58431372550000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1605,7 +1605,7 @@
                     <navigationItem key="navigationItem" id="BkV-uX-D6P">
                         <barButtonItem key="backBarButtonItem" title="Back" id="A7x-NH-MGR"/>
                     </navigationItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nNQ-N2-AqG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nNQ-N2-AqG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

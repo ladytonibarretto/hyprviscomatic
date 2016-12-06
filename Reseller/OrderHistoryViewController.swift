@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,7 +21,12 @@ class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITable
      *  Array containing menu options
      */
     var orderList = [Order]()
-    var arrayMenuOptions = [Dictionary<String,String>]()
+    var arrayMenuOptions = [Order]()
+    
+    var messageFrame = UIView()
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -36,43 +42,39 @@ class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITable
         OrderMenuOptions.delegate = self
         OrderMenuOptions.dataSource = self
 //        updateArrayMenuOptions()
+        
+        progressBarDisplayer(msg: "Loading...")
+        self.view.isUserInteractionEnabled = false
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let token = appDelegate.token
+        
+        getPurchases(token: token!, validationCompleted: { (purchases) -> Void in
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.messageFrame.isUserInteractionEnabled = true
+                self.messageFrame.window?.isUserInteractionEnabled = true
+                self.messageFrame.removeFromSuperview()
+                self.strLabel.isEnabled = false
+                self.updateArrayMenuOptions(purchases: purchases)
+                self.view.isUserInteractionEnabled = true
+            }
+        })
+
     }
     
-    func updateArrayMenuOptions(){
+    func updateArrayMenuOptions(purchases: [JSON]){
         orderList = [Order]()
         arrayMenuOptions.removeAll()
-        var items = [Item]()
-//        let product1 = Product(name: "E-Cigarette", brand: "Marlboro", price: 150.00)
-//        let product2 = Product(name: "Refillll", brand: "Fortune", price: 2250.00)
-//        let product3 = Product(name: "E-Cigarette Din", brand: "Chester", price: 9350.00)
-//        let product4 = Product(name: "Product Test", brand: "Pall", price: 5230.00)
-//        let item1 = Item(product: product1, quantity: 12)
-//        let item2 = Item(product: product2, quantity: 4)
-//        let item3 = Item(product: product3, quantity: 7)
-//        let item4 = Item(product: product4, quantity: 8)
-//        items.append(item1)
-//        items.append(item2)
-//        items.append(item3)
-//        items.append(item4)
-//        
-//        let test1 = Order(id: 1232345, discount: 100.00, totalPrice: 999.50, status: "Approved", items: items )
-//        orderList.append(test1)
-//        orderList.append(test1)
-//        orderList.append(test1)
-//        orderList.append(test1)
-//        orderList.append(test1)
-//        orderList.append(test1)
-//        orderList.append(test1)
-//        orderList.append(test1)
-//        
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
-//        arrayMenuOptions.append(["id": String(test1.id),"amount": String(test1.totalPrice), "date":"10-10-2014","time":"10:56", "status":"Approved"])
+        
+        for purchase in purchases{
+            let order = Order(id: purchase["id"].stringValue,
+                          totalPrice: purchase["total"].stringValue,
+                          status: purchase["status"].stringValue,
+                          dateAdded: purchase["date_added"].stringValue,
+                          items: purchase["items"].array!)
+            
+            arrayMenuOptions.append(order)
+        }
         OrderMenuOptions.reloadData()
     }
     
@@ -87,14 +89,14 @@ class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITable
         let lblID : UILabel = cell.contentView.viewWithTag(201) as! UILabel
         let lblAmount : UILabel = cell.contentView.viewWithTag(202) as! UILabel
         let lblDate : UILabel = cell.contentView.viewWithTag(203) as! UILabel
-        let lblTime : UILabel = cell.contentView.viewWithTag(204) as! UILabel
+//        let lblTime : UILabel = cell.contentView.viewWithTag(204) as! UILabel
         let lblStatus : UILabel = cell.contentView.viewWithTag(205) as! UILabel
 
-        lblID.text = arrayMenuOptions[indexPath.row]["id"]!
-        lblAmount.text = arrayMenuOptions[indexPath.row]["amount"]!
-        lblDate.text = arrayMenuOptions[indexPath.row]["date"]!
-        lblTime.text = arrayMenuOptions[indexPath.row]["time"]!
-        lblStatus.text = arrayMenuOptions[indexPath.row]["status"]!
+        lblID.text = String(arrayMenuOptions[indexPath.row].id)
+        lblAmount.text = String(arrayMenuOptions[indexPath.row].totalPrice)
+        lblDate.text = arrayMenuOptions[indexPath.row].dateAdded
+//        lblTime.text = arrayMenuOptions[indexPath.row]["time"]
+        lblStatus.text = arrayMenuOptions[indexPath.row].status
         
         return cell
     }
@@ -103,7 +105,7 @@ class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITable
         let btn = UIButton(type: UIButtonType.custom)
         btn.tag = indexPath.row
         
-        let order = orderList[indexPath.row]
+        let order = arrayMenuOptions[indexPath.row]
         performSegue(withIdentifier: "pushToOrderDetails", sender: order)
     }
     
@@ -124,8 +126,21 @@ class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITable
             }
             
         }
-        
     }
     
+    func progressBarDisplayer(msg:String) {
+        strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 200, height: 50))
+        strLabel.text = msg
+        strLabel.textColor = UIColor.white
+        messageFrame = UIView(frame: CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 180, height: 50))
+        messageFrame.layer.cornerRadius = 15
+        messageFrame.backgroundColor = UIColor(white: 0, alpha: 1)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.startAnimating()
+        messageFrame.addSubview(activityIndicator)
+        messageFrame.addSubview(strLabel)
+        view.addSubview(messageFrame)
+    }
     
 }

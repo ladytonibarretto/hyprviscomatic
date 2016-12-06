@@ -82,11 +82,10 @@ func getBranches(token: String,validationCompleted: @escaping (_ branches: [JSON
     })
 }
 
-
 func getProducts(validationCompleted: @escaping (_ products: [JSON]) -> Void) {
-
+    
     let URL = "\(Constants.baseURL)/\(Constants.productURL)"
-
+    
     var productList = [JSON]()
     
     sendRequest(url: URL, params:"", type: "GET", completedRequest: { (dat, stat) -> Void in
@@ -98,6 +97,24 @@ func getProducts(validationCompleted: @escaping (_ products: [JSON]) -> Void) {
             }
         }
         validationCompleted(productList)
+    })
+}
+
+func getPurchases(token: String, validationCompleted: @escaping (_ products: [JSON]) -> Void) {
+
+    let URL = "\(Constants.baseURL)/\(Constants.purchaseURL)"
+
+    var purchaseList = [JSON]()
+    
+    sendRequest(url: URL, token: token, params:"", type: "GET", completedRequest: { (dat, stat) -> Void in
+        let result = JSON(data: dat)
+        
+        if let purchases = result["results"].array{
+            for purchase in purchases {
+                purchaseList.append(purchase)
+            }
+        }
+        validationCompleted(purchaseList)
     })
 }
 

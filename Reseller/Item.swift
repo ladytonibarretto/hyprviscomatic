@@ -9,22 +9,39 @@
 import Foundation
 
 class Item {
-    private var _product: Product!
+    private var _product: String!
+    private var _brand: String!
+    private var _price: Double!
     private var _quantity: UInt!
     
-    
-    var product: Product
+    var product: String
     {
-        return _product
+        set { _product = newValue }
+        get { return _product }
     }
-    
+
+    var brand: String
+        {
+        set { _brand = newValue }
+        get { return _brand }
+    }
+
+    var price: Double
+        {
+        set { _price = newValue }
+        get { return _price }
+    }
+
     var quantity: UInt {
-        return _quantity
+        set { _quantity = newValue }
+        get { return _quantity }
     }
     
-    init(product: Product, quantity: UInt) {
+    init(product: String, brand: String, price: Double, quantity: UInt) {
         
         _product = product
+        _brand = brand
+        _price = price
         _quantity = quantity
     }
 }

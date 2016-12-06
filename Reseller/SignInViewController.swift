@@ -48,7 +48,7 @@ class SingInViewController: UIViewController, UITextFieldDelegate {
         
         // Verify credentials
         isValidCredential(username: username.text!, password: password.text!, validationCompleted: { (dat, stat) -> Void in
-                
+            
             DispatchQueue.main.async {
                 
                 // Remove activity indicator
@@ -61,6 +61,17 @@ class SingInViewController: UIViewController, UITextFieldDelegate {
                     
                 // Check credentials based on http status code
                 if stat == 200 {
+                    // store token
+                    var token = JSON(data: dat)["token"].stringValue
+                    token = "JWT \(token)"
+
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.token = token
+                    
+                    
+                    print(token)
+
                     self.performSegue(withIdentifier: "pushToDistShop", sender: nil)
                 } else if stat == 403 {
                     self.showModal(title: "Invalid Credentials!", msg: "Unable to login with provided credentials")
