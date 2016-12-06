@@ -1408,6 +1408,7 @@
                     <navigationItem key="navigationItem" title="Order Details" id="g7r-2N-fIw"/>
                     <connections>
                         <outlet property="OrderDetailsMenuOptions" destination="2SQ-Je-AD1" id="rgb-at-ElE"/>
+                        <outlet property="totalAmountLbl" destination="Nrl-YQ-LAk" id="FEL-tn-RHl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VUD-BB-kLG" userLabel="First Responder" sceneMemberID="firstResponder"/>

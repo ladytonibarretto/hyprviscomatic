@@ -89,13 +89,11 @@ class OrderHistoryViewController: UIViewController, UITableViewDelegate, UITable
         let lblID : UILabel = cell.contentView.viewWithTag(201) as! UILabel
         let lblAmount : UILabel = cell.contentView.viewWithTag(202) as! UILabel
         let lblDate : UILabel = cell.contentView.viewWithTag(203) as! UILabel
-//        let lblTime : UILabel = cell.contentView.viewWithTag(204) as! UILabel
         let lblStatus : UILabel = cell.contentView.viewWithTag(205) as! UILabel
 
         lblID.text = String(arrayMenuOptions[indexPath.row].id)
         lblAmount.text = String(arrayMenuOptions[indexPath.row].totalPrice)
         lblDate.text = arrayMenuOptions[indexPath.row].dateAdded
-//        lblTime.text = arrayMenuOptions[indexPath.row]["time"]
         lblStatus.text = arrayMenuOptions[indexPath.row].status
         
         return cell

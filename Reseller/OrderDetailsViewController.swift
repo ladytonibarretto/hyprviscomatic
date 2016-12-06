@@ -13,6 +13,7 @@ class OrderDetailsViewController: UIViewController, UITableViewDelegate, UITable
 
     @IBOutlet weak var OrderDetailsMenuOptions: UITableView!
         
+    @IBOutlet weak var totalAmountLbl: UILabel!
     private var _order: Order!
     
     var productList = [Product]()
@@ -41,6 +42,19 @@ class OrderDetailsViewController: UIViewController, UITableViewDelegate, UITable
         OrderDetailsMenuOptions.delegate = self
         OrderDetailsMenuOptions.dataSource = self
         updateArrayMenuOptions()
+        updateTotalAmount()
+    }
+    
+    func updateTotalAmount(){
+        var amount: Double
+        
+        amount = 0
+        for item in arrayMenuOptions{
+            let price = Double(item["price"]!)
+            amount = amount + price!
+        }
+        
+        totalAmountLbl.text = String(amount)
     }
     
     func updateArrayMenuOptions(){
