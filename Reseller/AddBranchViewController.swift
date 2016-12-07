@@ -9,6 +9,7 @@
 import Foundation
 
 import UIKit
+import SwiftyJSON
 
 class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
@@ -39,6 +40,10 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
     var latitude: Double?
     var longitude: Double?
     
+    var messageFrame = UIView()
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+
     
     // data from previous controller
     var shopName: String?
@@ -51,6 +56,9 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
     var isNewAccount = true
     
     var isEdit = false
+
+    var storeImgList = [UIImageView]()
+    var permitImgList = [UIImageView]()
 
     private var _branch: Branch!
     
@@ -166,9 +174,9 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
         } else if isNewAccount == false && isComplete() {
             // TODO: integrate 
             // show modal
-            showModal(title: "Thank you for adding new branch!", msg: "This is pending for approval", isComplete: true)
+            registerBranch()
+//            showModal(title: "Thank you for adding new branch!", msg: "This is pending for approval", isComplete: true)
             
-            performSegue(withIdentifier: "pushToBranches", sender: branch)
         } else {
             showWarningModal(msg: "Please fill in all the required fields. Make sure to upload one store image and one permit image.")
         }
@@ -177,7 +185,11 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
     func showModal(title: String, msg: String, isComplete: Bool){
         let alertController = UIAlertController(title: title, message:
             msg, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) { action -> Void in
+            if isComplete {
+                self.performSegue(withIdentifier: "pushToBranches", sender: nil)
+            }
+        })
         
         self.present(alertController, animated: true, completion: nil)
         
@@ -235,6 +247,81 @@ class AddBranchViewController: UIViewController, UIImagePickerControllerDelegate
             }
         }
         
+    }
+
+    func convertPhotosToBase64() -> ImageModel {
+        
+        let branch = ImageModel()
+        var stringBaseList = [String]()
+        
+        for imageView in storeImgList {
+            if imageView.image != nil {
+                let storeImgData = UIImageJPEGRepresentation((imageView.image)!, 0.5)
+                var storeImgString = storeImgData?.base64EncodedString(options:Data.Base64EncodingOptions(rawValue: UInt(0)))
+                
+                storeImgString = "data:image/jpeg;base64," + storeImgString!
+                stringBaseList.append(storeImgString!)
+            }
+        }
+        
+        for imageView in permitImgList {
+            if imageView.image != nil {
+                let permitImgData = UIImageJPEGRepresentation(imageView.image!, 0.5)
+                let permitImgString = permitImgData?.base64EncodedString(options: [])
+                stringBaseList.append(permitImgString!)
+            }
+        }
+        
+        branch.stringBase = stringBaseList
+        
+        return branch
+        
+    }
+
+    func registerBranch(){
+        progressBarDisplayer(msg: "Loading...")
+        self.view.isUserInteractionEnabled = false
+        
+        let branchImage = convertPhotosToBase64()
+        
+        let newBranch = Branch()
+        newBranch.name = (branchName?.text)!
+        newBranch.address = (branchAddress?.text)!
+        newBranch.phone = (phone?.text)!
+        newBranch.photos = branchImage
+        
+        postBranch(branchModel: newBranch, validationCompleted: { (dat, stat) -> Void in
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.messageFrame.isUserInteractionEnabled = true
+                self.messageFrame.window?.isUserInteractionEnabled = true
+                self.messageFrame.removeFromSuperview()
+                self.view.isUserInteractionEnabled = true
+                
+                self.strLabel.isEnabled = false
+                
+                if stat == 201 {
+                    self.showModal(title: "Thank you for adding new branch!", msg: "Branch is pending for approval", isComplete: true)
+                } else {
+                    self.showModal(title: "Error!", msg: "Cannot process your request...", isComplete: false)
+                }
+            }
+        })
+    }
+    
+    func progressBarDisplayer(msg:String) {
+        strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 200, height: 50))
+        strLabel.text = msg
+        strLabel.textColor = UIColor.white
+        messageFrame = UIView(frame: CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 180, height: 50))
+        messageFrame.layer.cornerRadius = 15
+        messageFrame.backgroundColor = UIColor(white: 0, alpha: 1)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.startAnimating()
+        messageFrame.addSubview(activityIndicator)
+        messageFrame.addSubview(strLabel)
+        view.addSubview(messageFrame)
     }
 
     

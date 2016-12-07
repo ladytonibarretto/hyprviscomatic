@@ -19,6 +19,8 @@
 		E26EDB371DD4A34300423847 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EDB361DD4A34300423847 /* Item.swift */; };
 		E26EDB391DD4AD4C00423847 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EDB381DD4AD4C00423847 /* OrderDetailsViewController.swift */; };
 		E26EDB3F1DD4EC4B00423847 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EDB3E1DD4EC4B00423847 /* ProductViewController.swift */; };
+		E2B701B61DF8B75200CA9D51 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B701B51DF8B75200CA9D51 /* CoreData.framework */; };
+		E2B701BA1DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2B701B81DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodeld */; };
 		E2BEB4D21DB90E8A00F8764A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BEB4D11DB90E8A00F8764A /* BaseViewController.swift */; };
 		E2BEB4D41DB90EFE00F8764A /* ResellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BEB4D31DB90EFE00F8764A /* ResellerViewController.swift */; };
 		E2BEB4D61DB90F9A00F8764A /* ShoppingCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BEB4D51DB90F9A00F8764A /* ShoppingCartViewController.swift */; };
@@ -56,6 +58,8 @@
 		E26EDB361DD4A34300423847 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E26EDB381DD4AD4C00423847 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		E26EDB3E1DD4EC4B00423847 /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		E2B701B51DF8B75200CA9D51 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E2B701B91DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = hyprviscomatic.xcdatamodel; sourceTree = "<group>"; };
 		E2BEB4D11DB90E8A00F8764A /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E2BEB4D31DB90EFE00F8764A /* ResellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResellerViewController.swift; sourceTree = "<group>"; };
 		E2BEB4D51DB90F9A00F8764A /* ShoppingCartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingCartViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2B701B61DF8B75200CA9D51 /* CoreData.framework in Frameworks */,
 				98DC05D60B1FA00192C471FF /* Pods_Reseller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +100,7 @@
 		6B3C69FEC528AA57EB723B9A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2B701B51DF8B75200CA9D51 /* CoreData.framework */,
 				BBBA9734024AF4F46E0D207D /* Pods_Reseller.framework */,
 			);
 			name = Frameworks;
@@ -133,6 +139,13 @@
 				E26EDB381DD4AD4C00423847 /* OrderDetailsViewController.swift */,
 			);
 			name = "Order History";
+			sourceTree = "<group>";
+		};
+		E2B701B71DF8B78C00CA9D51 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		E2BEB4D91DBCD9D200F8764A /* Controller */ = {
@@ -200,6 +213,7 @@
 		E83C1C831DB4CE2E00CA7221 /* Reseller */ = {
 			isa = PBXGroup;
 			children = (
+				E2B701B71DF8B78C00CA9D51 /* Resources */,
 				E26EDB2E1DD4925F00423847 /* Service */,
 				E2EF903D1DCBFB1F00B74BE8 /* View */,
 				E2EF903A1DCBF50700B74BE8 /* Model */,
@@ -210,6 +224,7 @@
 				E83C1C8D1DB4CE2E00CA7221 /* LaunchScreen.storyboard */,
 				E83C1C901DB4CE2E00CA7221 /* Info.plist */,
 				E26EDB2C1DD3C82900423847 /* Constants.swift */,
+				E2B701B81DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodeld */,
 			);
 			path = Reseller;
 			sourceTree = "<group>";
@@ -357,6 +372,7 @@
 				19BEDFFA1DF18F0E000C9C12 /* Registration.swift in Sources */,
 				E2EF90471DCE43DE00B74BE8 /* ImageModel.swift in Sources */,
 				E26EDB301DD4927A00423847 /* APIHandler.swift in Sources */,
+				E2B701BA1DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodeld in Sources */,
 				E2BEB4D41DB90EFE00F8764A /* ResellerViewController.swift in Sources */,
 				E2EF903C1DCBF53B00B74BE8 /* NotificationPost.swift in Sources */,
 				E26EDB351DD49B3E00423847 /* Order.swift in Sources */,
@@ -493,7 +509,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 43J5TN6457;
 				INFOPLIST_FILE = Reseller/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lbarretto.hyprviscomatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -508,7 +524,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 43J5TN6457;
 				INFOPLIST_FILE = Reseller/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lbarretto.hyprviscomatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -538,6 +554,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E2B701B81DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E2B701B91DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodel */,
+			);
+			currentVersion = E2B701B91DF8B7BC00CA9D51 /* hyprviscomatic.xcdatamodel */;
+			path = hyprviscomatic.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E83C1C791DB4CE2E00CA7221 /* Project object */;
 }

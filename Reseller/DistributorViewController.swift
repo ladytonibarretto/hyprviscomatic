@@ -33,6 +33,9 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
         progressBarDisplayer(msg: "Loading...")
         self.view.isUserInteractionEnabled = false
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let token = appDelegate.token
+
         getProducts(validationCompleted: { (products) -> Void in
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
@@ -47,7 +50,9 @@ class DistributorViewController: BaseViewController, UITableViewDelegate, UITabl
                 self.view.isUserInteractionEnabled = true
             }
         })
-        addSlideMenuButton()
+        if token != nil {
+            addSlideMenuButton()
+        }
     }
 
     override func didReceiveMemoryWarning() {

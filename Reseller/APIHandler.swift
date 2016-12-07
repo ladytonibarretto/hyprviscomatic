@@ -198,7 +198,7 @@ func postRegistration(registrationModel: Registration, validationCompleted: @esc
             for stringBase in branchModel.photos.stringBase {
                 let storePhotoJson:NSMutableDictionary = NSMutableDictionary()
                 storePhotoJson.setValue(stringBase, forKey: "image")
-                storePhotoJson.setValue("Photo of Permit No. ", forKey: "description")
+                storePhotoJson.setValue("Branch Photo", forKey: "description")
                 photosJsonArray.add(storePhotoJson)
             }
             
@@ -225,6 +225,47 @@ func postRegistration(registrationModel: Registration, validationCompleted: @esc
         let params = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
         
         sendRequest(url: URL, params: params as String, type: "POST", isJson: true, completedRequest: { (dat, stat) -> Void in validationCompleted(dat, stat)
+        })
+    }catch {
+        print(error)
+    }
+}
+
+func postBranch(branchModel: Branch, validationCompleted: @escaping (_ dat: Data, _ stat: Int) -> Void) {
+    let URL = "\(Constants.baseURL)/\(Constants.branchURL)"
+    
+    //Branch json body
+    let photosJsonArray:NSMutableArray = NSMutableArray()
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let token = appDelegate.token
+    
+    print("with branchhhh", branchModel.name)
+    
+    //array of photo
+    for stringBase in branchModel.photos.stringBase {
+        let storePhotoJson:NSMutableDictionary = NSMutableDictionary()
+        storePhotoJson.setValue(stringBase, forKey: "image")
+        storePhotoJson.setValue("Photo of Permit No. ", forKey: "description")
+        photosJsonArray.add(storePhotoJson)
+    }
+    
+    let branchItem: NSMutableDictionary = NSMutableDictionary()
+    branchItem.setObject(photosJsonArray, forKey: "photos" as NSCopying)
+    branchItem.setValue("cicci.miranda@gmail.com", forKey: "user")
+    branchItem.setValue(branchModel.name, forKey: "name")
+    branchItem.setValue("0", forKey: "lat")
+    branchItem.setValue("0", forKey: "lng")
+    branchItem.setValue(branchModel.phone, forKey: "phone")
+    branchItem.setValue(branchModel.address, forKey: "address")
+    
+    do {
+        
+        let data = try JSONSerialization.data(withJSONObject: branchItem, options: JSONSerialization.WritingOptions.prettyPrinted)
+        
+        let params = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
+        
+        sendRequest(url: URL, token: token, params: params as String, type: "POST", isJson: true, completedRequest: { (dat, stat) -> Void in validationCompleted(dat, stat)
         })
     }catch {
         print(error)
