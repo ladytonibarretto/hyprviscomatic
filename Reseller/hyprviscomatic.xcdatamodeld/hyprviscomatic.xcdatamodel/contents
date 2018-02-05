@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16A323" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Item" representedClassName=".Item" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="product" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="toUser" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserData" inverseName="toItem" inverseEntity="UserData" syncable="YES"/>
+    </entity>
+    <entity name="UserData" representedClassName=".UserData" syncable="YES">
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="toUser" inverseEntity="Item" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="UserData" positionX="-90" positionY="-109" width="128" height="73"/>
+        <element name="Item" positionX="259" positionY="-108" width="128" height="118"/>
+    </elements>
+</model>

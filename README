@@ -1,0 +1,56 @@
+Steps on how to build/test app
+
+1. Clone repository from bitbucket
+
+git@bitbucket.org:ladybarretto/hyprviscomatic.git
+
+2. Install CocoaPods
+
+sudo gem install cocoapods
+
+* Please see this guide if you encounter error
+https://guides.cocoapods.org/using/getting-started.html
+
+2. Go to root directory of app
+
+Sample path: /Users/Toni/Source/ios/v4/hyprviscomatic
+
+cd /Users/Toni/Source/ios/v4/hyprviscomatic
+
+3. Install pod dependencies
+
+pod install
+
+3.1 If you encountered error, please try updating your pod repo
+
+pod repo update
+
+then re-run 
+
+pod install
+
+4. Open application in xcode
+
+Double click "Reseller.xcworkspace" in root directory of app (use finder)
+
+5. Try to build the app, if there's an error, please see uploaded screenshot in repo (project_settings.png).
+In order to get to that settings in the screenshot, click the top level of the project "Reseller" (with blue icon)
+
+Make sure to fix all errors.
+
+Here are some possible errors:
+
+a. Error in Team
+-> Make sure you choose Personal
+b. Bundle identifier
+-> rename com.lbarretto.hyprviscomatic to com.<your_preferred_name>.hyprviscomatic
+c. Deployment Target should be 10.0 
+
+6. If no errors already, connect your device to macbook and you should recognize your device when choosing target device.
+Choose your actual device then build again
+
+
+Hope this works! :)
+P.S. Please bare with my code, first solo IOS app I developed. Wasn't able to optimiza due to time constraints. Cheers!
+
+
